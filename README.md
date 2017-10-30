@@ -7,7 +7,7 @@
 
 使用时只需绑定`treeData`和`options`即可。组件还提供了`增删改`事件，你可以很方便的在组件上监听。
 
-##DEMO
+## DEMO
 
 一个演示 [Demo](https://jiaxincui.github.io/vue-tree/dist/)
 
@@ -84,7 +84,7 @@ export default {
 </style>
 
 ```
-###设置选项
+### 设置选项
 以下为默认选项，
 
 如果你想继续使用默认设置只需传递一个空的对象`options: {}`，
@@ -113,6 +113,8 @@ options: {
 这3个事件仅仅是传递当前id到监听器，并未实质操作treeData，因为增删改数据在父组件更新后会传递到tree视图。
 #### 监听器
 如果需要，你可以选择绑定这些事件的其中一个或多个。
+
+**注意:叶子节点双击事件也会触发`add-a-child`**
 ```html
 <vue-tree 
     :tree-data="treeData" 
