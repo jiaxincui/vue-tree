@@ -7,6 +7,9 @@
 
 使用时只需绑定`treeData`和`options`即可。组件还提供了`增删改`事件，你可以很方便的在组件上监听。
 
+##DEMO
+
+一个演示 [emo](https://jiaxDincui.github.io/vue-tree/dist/)
 
 ## Build Setup
 
@@ -87,7 +90,7 @@ export default {
 如果你想继续使用默认设置只需传递一个空的对象`options: {}`，
 
 或仅包含个别设置的项`options: {dispalyName:'display_name'}`
-```json
+```
 options: {
                 dispalyName: 'name', //显示名称字段
                 addItem: true, //是否显示添加子节点按钮
@@ -101,7 +104,7 @@ options: {
                 showDelete: true, //是否显示删除按钮
                 editClass: 'fa fa-edit', //编辑按钮(font-awesome)
                 deleteClass: 'fa fa-trash-o' //删除按钮(font-awesome)
-            },
+           },
 
 ```
 
