@@ -8,7 +8,7 @@
             <span v-if="isFolder"
                   @click="toggle"
                   class="tree-item-toggle">
-                <i :class="[open ? options.openClass : options.closeClass]"></i>
+                <i :class="[open ? options.closeClass : options.openClass]"></i>
             </span>
             <span class="tree-item-crud">
                 <i class="tree-item-edit" v-if="options.showEdit" @click="itemEdit" :class="[options.editClass]"></i>&nbsp;

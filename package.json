@@ -1,7 +1,11 @@
 {
   "name": "vue-tree",
   "version": "1.0.0",
-  "description": "A tree compenet for vue.js",
+  "description": "A tree component for vue.js",
+  "keywords": [
+    "Tree",
+    "Vue.js"
+  ],
   "author": "jenkincei <jenkincei@hotmail.com>",
   "private": true,
   "scripts": {
