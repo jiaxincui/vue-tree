@@ -9,7 +9,7 @@
 
 ##DEMO
 
-一个演示 [Demo](https://jiaxDincui.github.io/vue-tree/dist/)
+一个演示 [Demo](https://jiaxincui.github.io/vue-tree/dist/)
 
 ## Build Setup
 
