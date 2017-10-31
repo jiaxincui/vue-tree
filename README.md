@@ -1,6 +1,6 @@
 # vue-simple-tree
 
-> A somple tree component for vue.js
+> A smple tree component for vue.js
 
 ## 介绍
 一个简单灵活的vue.js树形组件，可作为插件使用，也可直接`import`项目文件
