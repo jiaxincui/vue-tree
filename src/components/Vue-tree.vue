@@ -22,16 +22,16 @@
             return {
                 defaultOptions: {
                     dispalyName: 'name',
-                    addItem: false,
-                    checkbox: false,
+                    addItem: true,
+                    checkbox: true,
                     checkedIds: [],
-                    checkedOpen: false,
+                    checkedOpen: true,
                     folderBold: true,
                     openClass: 'fa fa-plus-square text-danger',
                     closeClass: 'fa fa-minus-square text-info',
                     addClass: 'fa fa-plus text-danger',
-                    showEdit: false,
-                    showDelete: false,
+                    showEdit: true,
+                    showDelete: true,
                     editClass: 'fa fa-edit',
                     deleteClass: 'fa fa-trash-o'
                 },
