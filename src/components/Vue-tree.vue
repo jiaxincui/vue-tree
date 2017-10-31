@@ -1,5 +1,5 @@
 <template>
-    <ul id="vue-tree" style="list-style-type: none;">
+    <ul class="vue-tree">
         <tree-item class="tree-item"
                    :model="treeData"
                    :options="termOptions"
@@ -9,8 +9,10 @@
         </tree-item>
     </ul>
 </template>
+
 <script>
     import Item from './Item.vue'
+
     export default {
         props: {
             treeData: Object,
@@ -24,6 +26,7 @@
                     checkbox: false,
                     checkedIds: [],
                     checkedOpen: false,
+                    folderBold: true,
                     openClass: 'fa fa-plus-square text-danger',
                     closeClass: 'fa fa-minus-square text-info',
                     addClass: 'fa fa-plus text-danger',
@@ -63,3 +66,9 @@
         }
     }
 </script>
+
+<style scoped>
+    .vue-tree {
+        list-style-type: none
+    }
+</style>

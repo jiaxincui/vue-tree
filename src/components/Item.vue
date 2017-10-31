@@ -1,23 +1,31 @@
 <template>
-    <li class="tree-list-item" style="cursor: pointer;">
-        <div class="tree-item-content">
+    <li class="vue-tree-item">
+        <div class="item-wraper" onselectstart="return false;">
             <span v-if="options.checkbox">
                 <input type="checkbox" :value="model.id" v-model="checked" @change="change">
             </span>
-            <span @click="toggle" @dblclick="changeType" :style="{fontWeight: isFolder ? 'bold' : 'normal'}"> {{model[options.dispalyName]}} </span>
-            <span v-if="isFolder"
+            <span :style="{fontWeight: isFolder && options.folderBold ? 'bold' : 'normal'}"
                   @click="toggle"
-                  class="tree-item-toggle">
+                  @dblclick="changeType">{{model[options.dispalyName]}}
+            </span>
+            <span class="item-toggle"
+                  v-if="isFolder"
+                  @click="toggle">
                 <i :class="[open ? options.closeClass : options.openClass]"></i>
             </span>
-            <span class="tree-item-crud">
-                <i class="tree-item-edit" v-if="options.showEdit" @click="itemEdit" :class="[options.editClass]"></i>&nbsp;
-                <i class="tree-item-delete" v-if="options.showDelete" @click="itemDelete" :class="[options.deleteClass]"></i>
+            <span class="item-btn">
+                <i class="edit-btn"
+                   v-if="options.showEdit"
+                   @click="itemEdit"
+                   :class="[options.editClass]"></i>&nbsp;
+                <i class="delete-btn"
+                   v-if="options.showDelete"
+                   @click="itemDelete"
+                   :class="[options.deleteClass]"></i>
             </span>
         </div>
-        <ul v-show="open" v-if="isFolder" class="tree-list">
-            <tree-item class="tree-item"
-                       v-for="item in model.children"
+        <ul class="vue-tree-list" v-show="open" v-if="isFolder">
+            <tree-item v-for="item in model.children"
                        :model="item"
                        :options="options"
                        @child-checked="childChecked"
@@ -26,25 +34,28 @@
                        @item-delete="emitItemDelete"
                        :key="model.id">
             </tree-item>
-            <li class="add" @click="addChild" v-if="options.addItem"><small><i :class="[options.addClass]"></i></small></li>
+            <li class="tree-add" @click="addChild" v-if="options.addItem">
+                <small><i :class="[options.addClass]"></i></small>
+            </li>
         </ul>
     </li>
 </template>
 <script>
     import Vue from 'vue'
+
     export default {
         name: 'tree-item',
         props: {
             model: Object,
             options: Object,
         },
-        data () {
+        data() {
             return {
                 open: false,
                 checked: false
             }
         },
-        created () {
+        created() {
             if (this.options.checkbox) {
                 this.idsChange(this.options.checkedIds)
             }
@@ -159,7 +170,7 @@
             setHalfChecked(id) {
                 this.$nextTick(function () {
                     let inputs = document.getElementsByTagName('input');
-                    for(let i = 0, len = inputs.length; i < len; i++) {
+                    for (let i = 0, len = inputs.length; i < len; i++) {
                         if (parseInt(inputs[i].value, 10) === id) inputs[i].indeterminate = true
                     }
                 })
@@ -167,12 +178,12 @@
             deleteHalfChecked(id) {
                 this.$nextTick(function () {
                     let inputs = document.getElementsByTagName('input');
-                    for(let i = 0, len = inputs.length; i < len; i++) {
+                    for (let i = 0, len = inputs.length; i < len; i++) {
                         if (parseInt(inputs[i].value, 10) === id) inputs[i].indeterminate = false
                     }
                 })
             },
-            allChildAdd(item){
+            allChildAdd(item) {
                 if (item.children && item.children.length) {
                     for (let i = 0, len = item.children.length; i < len; i++) {
                         this.addChecked(item.children[i].id);
@@ -180,7 +191,7 @@
                     }
                 }
             },
-            allChildDelete(item){
+            allChildDelete(item) {
                 if (item.children && item.children.length) {
                     for (let i = 0, len = item.children.length; i < len; i++) {
                         this.delChecked(item.children[i].id);
@@ -188,7 +199,7 @@
                     }
                 }
             },
-            allChildIds(item, res){
+            allChildIds(item, res) {
                 if (item.children && item.children.length) {
                     for (let i = 0, len = item.children.length; i < len; i++) {
                         res.push(item.children[i].id);
@@ -210,22 +221,22 @@
                 }
             }
         },
-        watch:{
+        watch: {
             checkedIds: 'idsChange'
         }
     }
 </script>
-<style>
-    .tree-list-item {
-        padding: 8px 5px
+
+<style scoped>
+    .vue-tree-item {
+        cursor: pointer;
+        padding: 5px
     }
-    .tree-item-toggle {
-    }
-    .tree-item-crud {
+    .item-btn {
         display: none;
-        padding-left: 20px;
+        padding-left: 20px
     }
-    .tree-item-content:hover .tree-item-crud {
-        display:inline
+    .item-wraper:hover .item-btn {
+        display: inline
     }
 </style>

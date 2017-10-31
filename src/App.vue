@@ -34,6 +34,11 @@
                       </div>
                       <div class="checkbox">
                           <label>
+                              <input type="checkbox" v-model="options.folderBold"> 目录是否加粗显示
+                          </label>
+                      </div>
+                      <div class="checkbox">
+                          <label>
                               <input type="checkbox" v-model="options.showEdit"> 是否显示编辑按钮
                           </label>
                       </div>
@@ -50,14 +55,10 @@
               </div>
           </div>
       </div>
-
-
   </div>
 </template>
 
 <script>
-import VueTree from './components/Vue-tree.vue'
-
 export default {
     name: 'app',
     data () {
@@ -127,6 +128,7 @@ export default {
                 checkbox: true,
                 checkedIds: [10,12,8],
                 checkedOpen: true,
+                folderBold: true,
                 openClass: 'fa fa-plus-square text-danger',
                 closeClass: 'fa fa-minus-square text-info',
                 addClass: 'fa fa-plus text-danger',
@@ -149,7 +151,7 @@ export default {
             this.message.push('点击了删除按钮，节点ID[' + id + ']')
         }
     },
-    components: {'vue-tree': VueTree}
+//    components: {'vue-tree': VueTree}
 }
 </script>
 
