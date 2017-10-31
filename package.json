@@ -9,6 +9,10 @@
     "Vue.js"
   ],
   "author": "jiaxincui <jenkincei@hotmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jiaxincui/vue-tree.git"
+  },
   "main": "src/index.js",
   "scripts": {
     "dev": "node build/dev-server.js",
