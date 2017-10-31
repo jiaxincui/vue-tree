@@ -1,7 +1,6 @@
 <template>
     <ul class="vue-tree">
-        <tree-item class="tree-item"
-                   :model="treeData"
+        <tree-item :model="treeData"
                    :options="termOptions"
                    @add-a-child="addAChild"
                    @item-edit="itemEdit"
@@ -21,7 +20,7 @@
         data () {
             return {
                 defaultOptions: {
-                    dispalyName: 'name',
+                    itemName: 'name',
                     addItem: true,
                     checkbox: true,
                     checkedIds: [],

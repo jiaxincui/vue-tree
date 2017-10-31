@@ -6,7 +6,7 @@
             </span>
             <span :style="{fontWeight: isFolder && options.folderBold ? 'bold' : 'normal'}"
                   @click="toggle"
-                  @dblclick="changeType">{{model[options.dispalyName]}}
+                  @dblclick="changeType">{{model[options.itemName]}}
             </span>
             <span class="item-toggle"
                   v-if="isFolder"

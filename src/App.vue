@@ -123,7 +123,7 @@ export default {
                 ]
             },
             options: {
-                dispalyName: 'name',
+                itemName: 'name',
                 addItem: true,
                 checkbox: true,
                 checkedIds: [10,12,8],

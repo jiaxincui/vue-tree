@@ -5,11 +5,28 @@
 ## 介绍
 一个简单灵活的vue.js树形组件，可作为插件使用，也可直接`import`项目文件
 
-使用时只需绑定`treeData`和`options`即可。组件还提供了`增删改`事件，你可以很方便的在组件上监听。
+使用时只需绑定`treeData`和`options`即可。
+
+组件还提供了`增删改`事件，你可以很方便的在组件上监听。
+
+不止这些，
+
+- 绑定数据即可显示树形视图
+- 增删改事件支持
+- 可选是否显示复选框
+- 初始化选择勾选
+- 可选的按钮图标
+- 双击触发添加节点事件
+- 父节点半选状态
+- 可自定义显示字段
+- 可选择的按钮显示
+- ...
+
+
 
 ## 演示
 
-一个演示 [Demo](https://jiaxincui.github.io/vue-tree/dist/)
+A [Demo](https://jiaxincui.github.io/vue-tree/dist/)
 
 ## 安装
 
@@ -26,7 +43,7 @@ Vue.use(Vuetree)
 ```
 
 App.vue
-```html
+```
 <template>
   <div id="app">
       <vue-tree :tree-data="treeData" :options="options"></vue-tree>
@@ -34,12 +51,11 @@ App.vue
 </template>
 
 <script>
-
 export default {
     name: 'app',
     data () {
         return {
-            treeData:{  //treeData 树形数据，id是必须选项，name可自定（见设置项）
+            treeData: {
                 name: '根目录[1]',
                 id: 1,
                 children: [
@@ -75,9 +91,19 @@ export default {
 }
 </script>
 ```
+> 注意：默认设置使用了`font-awesome`的图标，以及`bootstrap`的情景颜色，如果你继续使用默认设置，请引入这两个`css`库
 
-**注意：默认设置使用了`font-awesome`的图标，以及`bootstrap`的情景颜色，如果你继续使用默认设置，请引入这两个`css`库**
-
+###treeData数据格式
+```
+treeData: {
+    id: 1, //id必须且只能以id命名
+    name: 'Root', //name必须，可重命名如display_name，须在options.itemName设置
+    children: [ //children非必需，如果有以数组存在
+        {id: 2, name: 'Node2'},
+        {id: 3, name: 'Node3'}
+    ]
+}
+```
 ## 设置选项
 以下为默认选项。
 
@@ -86,10 +112,10 @@ export default {
 或仅包含个别设置的项`options: {someOption: true}`
 ```
 options: {
-    dispalyName: 'name', //显示名称字段
+    itemName: 'name', //节点显示字段
     addItem: true, //是否显示添加子节点按钮
-    checkbox: true, //是否显示多选框
-    checkedIds: [], //初始化时选中项id
+    checkbox: true, //是否显示选择框
+    checkedIds: [], //初始化时选中id
     checkedOpen: true, //选中时是否展开节点
     folderBold: true, //目录是否加粗显示
     openClass: 'fa fa-plus-square text-info', //展开按钮(font-awesome)
@@ -112,7 +138,7 @@ options: {
 
 如果需要，你可以选择绑定这些事件的其中一个或多个。
 
-**注意:叶子节点双击事件也会触发`add-a-child`**
+> 注意:叶子节点双击事件也会触发`add-a-child`
 
 ```html
 <vue-tree 
@@ -139,6 +165,26 @@ methods: {
     }
 }
 ```
+## 样式
+如果你想修改默认样式，一切都为你准备好了，只需要重新定义以下css类
+
+`.vue-tree`
+
+`.vue-tree .vue-tree-item`
+
+`.vue-tree .item-wrapper`
+
+`.vue-tree .item-wrapper .item-toggle`
+
+`.vue-tree .item-wrapper .item-btn`
+
+`.vue-tree .item-wrapper .item-btn .edit-btn`
+
+`.vue-tree .item-wrapper .item-btn .delete-btn`
+
+`.vue-tree-list`
+
+`.vue-tree-list .tree-add`
 
 ## License
 
