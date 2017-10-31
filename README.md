@@ -18,7 +18,7 @@
 npm install vue-simple-tree --sve-dev
 ```
 
-### 使用示例
+## 使用示例
 main.js
 ```js
 import Vuetree from 'vue-simple-tree'
@@ -102,13 +102,13 @@ options: {
 }
 ```
 
-### 事件
+## 事件
 
 `add-a-child`、 `item-edit` 、`item-delete` 分别为添加子节点、编辑节点、删除节点事件。
 
 这3个事件仅仅是传递当前id到监听器，并未实质操作treeData，因为增删改数据在父组件更新后会传递到tree视图。
 
-#### 监听器
+## 监听器
 
 如果需要，你可以选择绑定这些事件的其中一个或多个。
 
