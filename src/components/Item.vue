@@ -1,6 +1,6 @@
 <template>
     <li class="vue-tree-item">
-        <div class="item-wraper" onselectstart="return false;">
+        <div class="item-wrapper" onselectstart="return false;">
             <span v-if="options.checkbox">
                 <input type="checkbox" :value="model.id" v-model="checked" @change="change">
             </span>
@@ -236,7 +236,7 @@
         display: none;
         padding-left: 20px
     }
-    .item-wraper:hover .item-btn {
+    .item-wrapper:hover .item-btn {
         display: inline
     }
 </style>
