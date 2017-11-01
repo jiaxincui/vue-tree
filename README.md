@@ -38,78 +38,117 @@ npm install vue-simple-tree --sve-dev
 
 ## 使用示例
 
-main.js
+有两种使用方法:
 
-```js
-import Vuetree from 'vue-simple-tree'
-Vue.use(Vuetree)
-```
+1. 局部注册component(推荐)
+    `App.vue`
+  
+      ```
+      <template>
+        <div id="app">
+            <vue-tree :tree-data="treeData" :options="options"></vue-tree>
+        </div>
+      </template>
+      
+      <script>
+      import VueTree from 'vue-simple-tree/src/components/Vue-tree.vue'
+      export default {
+          name: 'app',
+          components: { VueTree },
+          data () {
+              return {
+                  treeData: {
+                      name: '根目录[1]',
+                      id: 1,
+                      children: [
+                          { name: '一级节点[2]', id: 2},
+                          { name: '一级节点[3]', id: 3},
+                          {
+                              name: '二级节点[4]', id: 4,
+                              children: [
+                                  {
+                                      name: '三级节点[5]', id: 5,
+                                      children: [
+                                          { name: '四级节点[6]', id: 6},
+                                          { name: '四级节点[8]', id: 8},
+                                          { name: '四级节点[30]', id: 30},
+                                      ]
+                                  },
+                                  { name: '三级节点[9]', id: 9},
+                                  { name: '三级节点[10]', id: 10},
+                                  {
+                                      name: '三级节点[11]', id: 11,
+                                      children: [
+                                          { name: '四级节点[12]', id: 12},
+                                          { name: '四级节点[13]', id: 13},
+                                      ]
+                                  }
+                              ]
+                          }
+                      ]
+                  },
+                  // 设置项
+                  options: {},
+              }
+          },
+      }
+      </script>
+      ```
+2. 全局注册，通过插件形式注册全局component
+    
+    `main.js`
 
-App.vue
-```
-<template>
-  <div id="app">
-      <vue-tree :tree-data="treeData" :options="options"></vue-tree>
-  </div>
-</template>
+    ```js
+    import App from './App'
+    import Vuetree from 'vue-simple-tree'
+    
+    Vue.use(Vuetree);
+    
+    new Vue({
+      el: '#app',
+      template: '<App/>',
+      components: { App }
+    })
+    ```
 
-<script>
-export default {
-    name: 'app',
-    data () {
-        return {
-            treeData: {
-                name: '根目录[1]',
-                id: 1,
-                children: [
-                    { name: '一级节点[2]', id: 2},
-                    { name: '一级节点[3]', id: 3},
-                    {
-                        name: '二级节点[4]', id: 4,
-                        children: [
-                            {
-                                name: '三级节点[5]', id: 5,
-                                children: [
-                                    { name: '四级节点[6]', id: 6},
-                                    { name: '四级节点[8]', id: 8},
-                                    { name: '四级节点[30]', id: 30},
-                                ]
-                            },
-                            { name: '三级节点[9]', id: 9},
-                            { name: '三级节点[10]', id: 10},
-                            {
-                                name: '三级节点[11]', id: 11,
-                                children: [
-                                    { name: '四级节点[12]', id: 12},
-                                    { name: '四级节点[13]', id: 13},
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            },
-            // 设置项
-            options: {},
-        }
-    },
-}
-</script>
-```
-> 注意：默认设置使用了`font-awesome`的图标，以及`bootstrap`的情景颜色，如果你继续使用默认设置，请引入这两个`css`库
-
+    `App.vue`
+    
+    ```
+    <template>
+      <div id="app">
+          <vue-tree :tree-data="treeData" :options="options"></vue-tree>
+      </div>
+    </template>
+    
+    <script>
+    export default {
+        name: 'app',
+        data () {
+            return {
+                treeData: {
+                    id: 1,
+                    name: 'Root'
+                },
+                options: {},
+            }
+        },
+    }
+    </script>
+    ```
+    
 ###treeData数据格式
 ```
-treeData: {
-    // id,必须字段，且字段名只能是id
-    id: 1,
-    // name,必须字段，字段名可任意如display_name，如不是默认name须在options.itemName设置
-    name: 'Root',
-    // children,非必需，如果有以数组出现
-    children: [
-        {id: 2, name: 'Node2'},
-        {id: 3, name: 'Node3'}
-    ]
-}
+    treeData: {
+        // id,必须字段，且字段名只能是id
+        id: 1,
+        // name,必须字段，字段名可任意如display_name，如不是默认name须在options.itemName设置
+        name: 'Root',
+        // children,非必需，如果有以数组出现
+        children: [
+            {id: 2, name: 'Node2'},
+            {id: 3, name: 'Node3'}
+        ]
+    }
 ```
 ## 设置选项
 
@@ -148,6 +187,7 @@ options: {
     deleteClass: 'fa fa-trash-o'
 }
 ```
+> 注意：默认设置使用了`font-awesome`的图标，以及`bootstrap`的情景颜色，如果你继续使用默认设置，请引入这两个`css`库
 
 ## 事件
 
@@ -187,6 +227,7 @@ methods: {
 }
 ```
 ## 样式
+
 如果你想修改默认样式，一切都为你准备好了，只需要重新定义以下css类
 
 `.vue-tree`
