@@ -15,7 +15,12 @@
     export default {
         props: {
             treeData: Object,
-            options: Object,
+            options: {
+                type: Object,
+                default: function () {
+                    return {}
+                }
+            }
         },
         data () {
             return {
@@ -34,7 +39,7 @@
                     editClass: 'fa fa-edit',
                     deleteClass: 'fa fa-trash-o'
                 },
-                termOptions: {},
+                termOptions: {}
             }
         },
         created () {
@@ -61,7 +66,7 @@
                     this.initOptions()
                 },
                 deep: true
-            },
+            }
         }
     }
 </script>
