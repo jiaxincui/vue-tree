@@ -4,7 +4,7 @@
             <span v-if="options.checkbox">
                 <input type="checkbox" :value="model.id" v-model="checked" @change="change">
             </span>
-            <span :style="{fontWeight: isFolder && options.folderBold ? 'bold' : 'normal'}"
+            <span :class="isBold"
                   @click="toggle"
                   @dblclick="changeType">{{model[options.itemName]}}
             </span>
@@ -62,8 +62,12 @@
         },
         computed: {
             isFolder() {
-                return this.model.children &&
-                    this.model.children.length
+                return this.model.children && this.model.children.length
+            },
+            isBold() {
+                return {
+                    'item-bold': this.isFolder && this.options.folderBold
+                }
             },
             checkedIds() {
                 return this.options.checkedIds
@@ -120,7 +124,7 @@
             },
             childChecked(checked) {
                 if (checked) {
-                    this.addChecked(this.model.id)
+                    this.addChecked(this.model.id);
                     let child = this.model.children;
                     let all = false;
                     for (let i = 0, len = child.length; i < len; i++) {
@@ -136,7 +140,6 @@
                     } else {
                         this.setHalfChecked(this.model.id)
                     }
-
                 } else {
                     let child = this.model.children;
                     let none = false;
@@ -238,5 +241,8 @@
     }
     .item-wrapper:hover .item-btn {
         display: inline
+    }
+    .item-bold {
+        font-weight: bold
     }
 </style>
