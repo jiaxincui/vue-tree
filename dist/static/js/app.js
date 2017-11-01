@@ -183,32 +183,35 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACt
             treeData: {
                 name: '根目录[1]',
                 id: 1,
-                children: [{ name: '一级节点[2]', id: 2 }, { name: '一级节点[3]', id: 3 }, {
-                    name: '二级节点[4]', id: 4,
+                children: [{
+                    name: '一级节点[4]', id: 4,
                     children: [{
-                        name: '三级节点[5]', id: 5,
-                        children: [{ name: '四级节点[6]', id: 6 }, { name: '四级节点[8]', id: 8 }, { name: '四级节点[30]', id: 30 }, {
-                            name: '四级节点[31]',
+                        name: '二级节点[5]', id: 5,
+                        children: [{ name: '三级节点[6]', id: 6 }, { name: '三级节点[8]', id: 8 }, { name: '三级节点[30]', id: 30 }, {
+                            name: '三级节点[31]',
                             id: 31,
-                            children: [{ name: '五级节点[36]', id: 36 }, { name: '五级节点[38]', id: 38 }, { name: '五级节点[39]', id: 39 }, { name: '五级节点[48]', id: 48 }]
+                            children: [{ name: '四级节点[36]', id: 36 }, { name: '四级节点[38]', id: 38 }, { name: '四级节点[39]', id: 39 }, { name: '四级节点[48]', id: 48 }]
                         }]
-                    }, { name: '三级节点[9]', id: 9 }, { name: '三级节点[10]', id: 10 }, {
-                        name: '三级节点[11]', id: 11,
-                        children: [{ name: '四级节点[12]', id: 12 }, { name: '四级节点[13]', id: 13 }, {
-                            name: '四级节点[14]', id: 14,
-                            children: [{ name: '五级节点[15]', id: 15 }, { name: '五级节点[16]', id: 16 }, { name: '五级节点[17]', id: 17 }, { name: '五级节点[18]', id: 18 }, {
-                                name: '五级节点[19]', id: 19,
-                                children: [{ name: '六级节点[20]', id: 20 }, { name: '六级节点[21]', id: 21 }, { name: '六级节点[22]', id: 22 }, { name: '六级节点[23]', id: 23 }, { name: '六级节点[24]', id: 24 }]
+                    }, { name: '二级节点[9]', id: 9 }, { name: '二级节点[10]', id: 10 }, {
+                        name: '二级节点[11]', id: 11,
+                        children: [{ name: '三级节点[12]', id: 12 }, { name: '三级节点[13]', id: 13 }, {
+                            name: '三级节点[14]', id: 14,
+                            children: [{ name: '四级节点[15]', id: 15 }, { name: '四级节点[16]', id: 16 }, { name: '四级节点[17]', id: 17 }, { name: '四级节点[18]', id: 18 }, {
+                                name: '四级节点[19]', id: 19,
+                                children: [{ name: '五级节点[20]', id: 20 }, { name: '五级节点[21]', id: 21 }, { name: '五级节点[22]', id: 22 }, { name: '五级节点[23]', id: 23 }, { name: '五级节点[24]', id: 24 }]
                             }]
                         }]
                     }]
-                }]
+                }, { name: '一级节点[2]', id: 2 }, {
+                    name: '一级节点[59]', id: 59,
+                    children: [{ name: '二级节点[60]', id: 60 }, { name: '二级节点[61]', id: 61 }, { name: '二级节点[62]', id: 62 }, { name: '二级节点[63]', id: 63 }, { name: '二级节点[64]', id: 64 }]
+                }, { name: '一级节点[3]', id: 3 }]
             },
             options: {
                 itemName: 'name',
                 addItem: true,
                 checkbox: true,
-                checkedIds: [10, 12, 8],
+                checkedIds: [8, 10, 12],
                 checkedOpen: true,
                 folderBold: true,
                 openClass: 'fa fa-plus-square text-danger',
@@ -242,7 +245,6 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACt
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("MVSX");
 //
 //
 //
@@ -285,8 +287,7 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACt
 //
 //
 //
-
-
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     name: 'tree-item',
@@ -360,12 +361,34 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACt
         },
         addChecked(id) {
             if (this.options.checkedIds.indexOf(id) < 0) {
-                __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].set(this.options.checkedIds, this.options.checkedIds.length, id);
+                this.$set(this.options.checkedIds, this.options.checkedIds.length, id);
             }
         },
         delChecked(id) {
             let index = this.options.checkedIds.indexOf(id);
-            if (index >= 0) __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].delete(this.options.checkedIds, index);
+            if (index >= 0) this.$delete(this.options.checkedIds, index);
+        },
+        setHalfChecked(id) {
+            this.$nextTick(function () {
+                let inputs = document.getElementsByTagName('input');
+                for (let i = 0, len = inputs.length; i < len; i++) {
+                    if (parseInt(inputs[i].value, 10) === id) {
+                        inputs[i].indeterminate = true;
+                        this.$emit('half-checked');
+                    }
+                }
+            });
+        },
+        halfChecked() {
+            this.setHalfChecked(this.model.id);
+        },
+        deleteHalfChecked(id) {
+            this.$nextTick(function () {
+                let inputs = document.getElementsByTagName('input');
+                for (let i = 0, len = inputs.length; i < len; i++) {
+                    if (parseInt(inputs[i].value, 10) === id) inputs[i].indeterminate = false;
+                }
+            });
         },
         childChecked(checked) {
             if (checked) {
@@ -414,22 +437,6 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACt
                     this.setHalfChecked(this.model.id);
                 }
             }
-        },
-        setHalfChecked(id) {
-            this.$nextTick(function () {
-                let inputs = document.getElementsByTagName('input');
-                for (let i = 0, len = inputs.length; i < len; i++) {
-                    if (parseInt(inputs[i].value, 10) === id) inputs[i].indeterminate = true;
-                }
-            });
-        },
-        deleteHalfChecked(id) {
-            this.$nextTick(function () {
-                let inputs = document.getElementsByTagName('input');
-                for (let i = 0, len = inputs.length; i < len; i++) {
-                    if (parseInt(inputs[i].value, 10) === id) inputs[i].indeterminate = false;
-                }
-            });
         },
         allChildAdd(item) {
             if (item.children && item.children.length) {
@@ -560,7 +567,7 @@ var esExports = { render: render, staticRenderFns: staticRenderFns }
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('li',{staticClass:"vue-tree-item"},[_c('div',{staticClass:"item-wrapper",attrs:{"onselectstart":"return false;"}},[(_vm.options.checkbox)?_c('span',[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.checked),expression:"checked"}],attrs:{"type":"checkbox"},domProps:{"value":_vm.model.id,"checked":Array.isArray(_vm.checked)?_vm._i(_vm.checked,_vm.model.id)>-1:(_vm.checked)},on:{"change":[function($event){var $$a=_vm.checked,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=_vm.model.id,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.checked=$$a.concat([$$v]))}else{$$i>-1&&(_vm.checked=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}}else{_vm.checked=$$c}},_vm.change]}})]):_vm._e(),_vm._v(" "),_c('span',{class:_vm.isBold,on:{"click":_vm.toggle,"dblclick":_vm.changeType}},[_vm._v(_vm._s(_vm.model[_vm.options.itemName])+"\n        ")]),_vm._v(" "),(_vm.isFolder)?_c('span',{staticClass:"item-toggle",on:{"click":_vm.toggle}},[_c('i',{class:[_vm.open ? _vm.options.closeClass : _vm.options.openClass]})]):_vm._e(),_vm._v(" "),_c('span',{staticClass:"item-btn"},[(_vm.options.showEdit)?_c('i',{staticClass:"edit-btn",class:[_vm.options.editClass],on:{"click":_vm.itemEdit}}):_vm._e(),_vm._v(" \n            "),(_vm.options.showDelete)?_c('i',{staticClass:"delete-btn",class:[_vm.options.deleteClass],on:{"click":_vm.itemDelete}}):_vm._e()])]),_vm._v(" "),(_vm.isFolder)?_c('ul',{directives:[{name:"show",rawName:"v-show",value:(_vm.open),expression:"open"}],staticClass:"vue-tree-list"},[_vm._l((_vm.model.children),function(item){return _c('tree-item',{key:_vm.model.id,attrs:{"model":item,"options":_vm.options},on:{"child-checked":_vm.childChecked,"add-a-child":_vm.emitAddChild,"item-edit":_vm.emitItemEdit,"item-delete":_vm.emitItemDelete}})}),_vm._v(" "),(_vm.options.addItem)?_c('li',{staticClass:"tree-add",on:{"click":_vm.addChild}},[_c('small',[_c('i',{class:[_vm.options.addClass]})])]):_vm._e()],2):_vm._e()])}
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('li',{staticClass:"vue-tree-item"},[_c('div',{staticClass:"item-wrapper",attrs:{"onselectstart":"return false;"}},[(_vm.options.checkbox)?_c('span',[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.checked),expression:"checked"}],attrs:{"type":"checkbox"},domProps:{"value":_vm.model.id,"checked":Array.isArray(_vm.checked)?_vm._i(_vm.checked,_vm.model.id)>-1:(_vm.checked)},on:{"change":[function($event){var $$a=_vm.checked,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=_vm.model.id,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.checked=$$a.concat([$$v]))}else{$$i>-1&&(_vm.checked=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}}else{_vm.checked=$$c}},_vm.change]}})]):_vm._e(),_vm._v(" "),_c('span',{class:_vm.isBold,on:{"click":_vm.toggle,"dblclick":_vm.changeType}},[_vm._v(_vm._s(_vm.model[_vm.options.itemName])+"\n        ")]),_vm._v(" "),(_vm.isFolder)?_c('span',{staticClass:"item-toggle",on:{"click":_vm.toggle}},[_c('i',{class:[_vm.open ? _vm.options.closeClass : _vm.options.openClass]})]):_vm._e(),_vm._v(" "),_c('span',{staticClass:"item-btn"},[(_vm.options.showEdit)?_c('i',{staticClass:"edit-btn",class:[_vm.options.editClass],on:{"click":_vm.itemEdit}}):_vm._e(),_vm._v(" \n            "),(_vm.options.showDelete)?_c('i',{staticClass:"delete-btn",class:[_vm.options.deleteClass],on:{"click":_vm.itemDelete}}):_vm._e()])]),_vm._v(" "),(_vm.isFolder)?_c('ul',{directives:[{name:"show",rawName:"v-show",value:(_vm.open),expression:"open"}],staticClass:"vue-tree-list"},[_vm._l((_vm.model.children),function(item){return _c('tree-item',{key:_vm.model.id,attrs:{"model":item,"options":_vm.options},on:{"child-checked":_vm.childChecked,"half-checked":_vm.halfChecked,"add-a-child":_vm.emitAddChild,"item-edit":_vm.emitItemEdit,"item-delete":_vm.emitItemDelete}})}),_vm._v(" "),(_vm.options.addItem)?_c('li',{staticClass:"tree-add",on:{"click":_vm.addChild}},[_c('small',[_c('i',{class:[_vm.options.addClass]})])]):_vm._e()],2):_vm._e()])}
 var staticRenderFns = []
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
