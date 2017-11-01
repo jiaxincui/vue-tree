@@ -6,21 +6,20 @@
 
 一个简单灵活的vue.js树形组件，可作为插件使用，也可直接`import`项目文件
 
-使用时只需绑定`treeData`和`options`即可。
+使用时只需绑定tree数据`treeData`即可。
 
 组件还提供了`增删改`事件，你可以很方便的在组件上监听。
 
 不止这些，
 
-- 绑定数据即可显示树形视图
 - 增删改事件支持
-- 可选是否显示复选框
-- 初始化选择勾选
+- 复选框显示可选
+- 初始化勾选
 - 可选的按钮图标
-- 双击触发添加节点事件
+- 支持双击添加子节点
 - 父节点半选状态
-- 可自定义显示字段
-- 可选择的按钮显示
+- 自定义显示字段
+- 增、删、改显示可选
 - ...
 
 
@@ -36,14 +35,50 @@ A [Demo](https://jiaxincui.github.io/vue-tree/dist/)
 npm install vue-simple-tree --sve-dev
 ```
 
+## 数据格式
+
+`tree.json`
+```json
+{
+"data": {
+    // id,必须字段，且字段名只能是id
+    "id": "1",
+    // name,必须字段，字段名可任意如display_name，如不是默认name须在options.itemName设置
+    "name": "Root",
+    // children,非必需，如果有以数组出现
+    "children": [
+      {
+        "id": "2",
+        "name": "Node2"
+      },
+      {
+        "id": "3",
+        "name": "Node3"
+      },
+      {
+        "id": "4",
+        "name": "Node4",
+        "children": [
+          {
+            "id": "5",
+            "name": "Node5"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
 ## 使用示例
 
-有两种使用方法:
+   有两种使用方法:
 
 1. 局部注册component(推荐)
+    
     `App.vue`
   
-      ```
+      ```vue
       <template>
         <div id="app">
             <vue-tree :tree-data="treeData" :options="options"></vue-tree>
@@ -52,45 +87,18 @@ npm install vue-simple-tree --sve-dev
       
       <script>
       import VueTree from 'vue-simple-tree/src/components/Vue-tree.vue'
+      import Tree from 'tree.json';
       export default {
           name: 'app',
           components: { VueTree },
           data () {
               return {
-                  treeData: {
-                      name: '根目录[1]',
-                      id: 1,
-                      children: [
-                          { name: '一级节点[2]', id: 2},
-                          { name: '一级节点[3]', id: 3},
-                          {
-                              name: '二级节点[4]', id: 4,
-                              children: [
-                                  {
-                                      name: '三级节点[5]', id: 5,
-                                      children: [
-                                          { name: '四级节点[6]', id: 6},
-                                          { name: '四级节点[8]', id: 8},
-                                          { name: '四级节点[30]', id: 30},
-                                      ]
-                                  },
-                                  { name: '三级节点[9]', id: 9},
-                                  { name: '三级节点[10]', id: 10},
-                                  {
-                                      name: '三级节点[11]', id: 11,
-                                      children: [
-                                          { name: '四级节点[12]', id: 12},
-                                          { name: '四级节点[13]', id: 13},
-                                      ]
-                                  }
-                              ]
-                          }
-                      ]
-                  },
+                  //tree数据
+                  treeData: Tree.data,
                   // 设置项
-                  options: {},
+                  options: {}
               }
-          },
+          }
       }
       </script>
       ```
@@ -113,7 +121,7 @@ npm install vue-simple-tree --sve-dev
 
     `App.vue`
     
-    ```
+    ```vue
     <template>
       <div id="app">
           <vue-tree :tree-data="treeData" :options="options"></vue-tree>
@@ -121,35 +129,19 @@ npm install vue-simple-tree --sve-dev
     </template>
     
     <script>
+    import Tree from 'tree.json';
     export default {
         name: 'app',
         data () {
             return {
-                treeData: {
-                    id: 1,
-                    name: 'Root'
-                },
-                options: {},
+                treeData: Tree.data,
+                options: {}
             }
-        },
+        }
     }
     </script>
     ```
-    
-###treeData数据格式
-```
-    treeData: {
-        // id,必须字段，且字段名只能是id
-        id: 1,
-        // name,必须字段，字段名可任意如display_name，如不是默认name须在options.itemName设置
-        name: 'Root',
-        // children,非必需，如果有以数组出现
-        children: [
-            {id: 2, name: 'Node2'},
-            {id: 3, name: 'Node3'}
-        ]
-    }
-```
+   
 ## 设置选项
 
 以下代码中是默认设置。
@@ -193,7 +185,7 @@ options: {
 
 `add-a-child`、 `item-edit` 、`item-delete` 分别为添加子节点、编辑节点、删除节点事件。
 
-这3个事件仅仅是传递当前id到监听器，并未实质操作treeData，因为增删改数据在父组件更新后会传递到tree视图。
+这3个事件唯一做的就是传递当前id到监听器，`增`、`删`、`改`操作在自定义的监听方法里处理后更新`treeData`并传递到视图。
 
 ## 监听器
 
