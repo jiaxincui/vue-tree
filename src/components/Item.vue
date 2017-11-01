@@ -29,6 +29,7 @@
                        :model="item"
                        :options="options"
                        @child-checked="childChecked"
+                       @half-checked="halfChecked"
                        @add-a-child="emitAddChild"
                        @item-edit="emitItemEdit"
                        @item-delete="emitItemDelete"
@@ -41,8 +42,6 @@
     </li>
 </template>
 <script>
-    import Vue from 'vue'
-
     export default {
         name: 'tree-item',
         props: {
@@ -115,12 +114,34 @@
             },
             addChecked(id) {
                 if (this.options.checkedIds.indexOf(id) < 0) {
-                    Vue.set(this.options.checkedIds, this.options.checkedIds.length, id);
+                    this.$set(this.options.checkedIds, this.options.checkedIds.length, id);
                 }
             },
             delChecked(id) {
                 let index = this.options.checkedIds.indexOf(id);
-                if (index >= 0) Vue.delete(this.options.checkedIds, index);
+                if (index >= 0) this.$delete(this.options.checkedIds, index);
+            },
+            setHalfChecked(id) {
+                this.$nextTick(function () {
+                    let inputs = document.getElementsByTagName('input');
+                    for (let i = 0, len = inputs.length; i < len; i++) {
+                        if (parseInt(inputs[i].value, 10) === id) {
+                            inputs[i].indeterminate = true;
+                            this.$emit('half-checked')
+                        }
+                    }
+                })
+            },
+            halfChecked() {
+                this.setHalfChecked(this.model.id)
+            },
+            deleteHalfChecked(id) {
+                this.$nextTick(function () {
+                    let inputs = document.getElementsByTagName('input');
+                    for (let i = 0, len = inputs.length; i < len; i++) {
+                        if (parseInt(inputs[i].value, 10) === id) inputs[i].indeterminate = false
+                    }
+                })
             },
             childChecked(checked) {
                 if (checked) {
@@ -169,22 +190,6 @@
                         this.setHalfChecked(this.model.id)
                     }
                 }
-            },
-            setHalfChecked(id) {
-                this.$nextTick(function () {
-                    let inputs = document.getElementsByTagName('input');
-                    for (let i = 0, len = inputs.length; i < len; i++) {
-                        if (parseInt(inputs[i].value, 10) === id) inputs[i].indeterminate = true
-                    }
-                })
-            },
-            deleteHalfChecked(id) {
-                this.$nextTick(function () {
-                    let inputs = document.getElementsByTagName('input');
-                    for (let i = 0, len = inputs.length; i < len; i++) {
-                        if (parseInt(inputs[i].value, 10) === id) inputs[i].indeterminate = false
-                    }
-                })
             },
             allChildAdd(item) {
                 if (item.children && item.children.length) {
