@@ -3,6 +3,7 @@
 > A simple tree component for vue.js
 
 ## 介绍
+
 一个简单灵活的vue.js树形组件，可作为插件使用，也可直接`import`项目文件
 
 使用时只需绑定`treeData`和`options`即可。
@@ -36,7 +37,9 @@ npm install vue-simple-tree --sve-dev
 ```
 
 ## 使用示例
+
 main.js
+
 ```js
 import Vuetree from 'vue-simple-tree'
 Vue.use(Vuetree)
@@ -85,7 +88,8 @@ export default {
                     }
                 ]
             },
-            options: {}, //设置项
+            // 设置项
+            options: {},
         }
     },
 }
@@ -96,35 +100,52 @@ export default {
 ###treeData数据格式
 ```
 treeData: {
-    id: 1, //id必须且只能以id命名
-    name: 'Root', //name必须，可重命名如display_name，须在options.itemName设置
-    children: [ //children非必需，如果有以数组存在
+    // id,必须字段，且字段名只能是id
+    id: 1,
+    // name,必须字段，字段名可任意如display_name，如不是默认name须在options.itemName设置
+    name: 'Root',
+    // children,非必需，如果有以数组出现
+    children: [
         {id: 2, name: 'Node2'},
         {id: 3, name: 'Node3'}
     ]
 }
 ```
 ## 设置选项
-以下为默认选项。
 
-如果你想继续使用默认设置只需传递一个空的对象`options: {}`，
+以下代码中是默认设置。
 
-或仅包含个别设置的项`options: {someOption: true}`
+你可以在`options`里覆盖默认设置，或仅包含个别设置的项`options: {someOption: true}`
+
+当然如果你想继续使用默认设置，你可以不用绑定`options`或绑定一个空的对象
 ```
 options: {
-    itemName: 'name', //节点显示字段
-    addItem: true, //是否显示添加子节点按钮
-    checkbox: true, //是否显示选择框
-    checkedIds: [], //初始化时选中id
-    checkedOpen: true, //选中时是否展开节点
-    folderBold: true, //目录是否加粗显示
-    openClass: 'fa fa-plus-square text-info', //展开按钮(font-awesome)
-    closeClass: 'fa fa-minus-square text-danger', //收缩按钮(font-awesome)
-    addClass: 'fa fa-plus text-danger', //添加节点按钮(font-awesome)
-    showEdit: true, //是否显示编辑按钮
-    showDelete: true, //是否显示删除按钮
-    editClass: 'fa fa-edit', //编辑按钮(font-awesome)
-    deleteClass: 'fa fa-trash-o' //删除按钮(font-awesome)
+    // String,节点显示字段
+    itemName: 'name',
+    // Boolean,是否显示添加子节点按钮
+    addItem: true,
+    // Boolean,是否显示选择框
+    checkbox: true,
+    // Array,初始化时选中id
+    checkedIds: [], 
+    // Boolean,选中时是否展开节点
+    checkedOpen: true,
+    // Boolean,目录是否加粗显示
+    folderBold: true,
+    // String,展开按钮(默认依赖font-awesome)
+    openClass: 'fa fa-plus-square text-info',
+    // String,收缩按钮(默认依赖font-awesome)
+    closeClass: 'fa fa-minus-square text-danger',
+    // String,添加节点按钮(默认依赖font-awesome)
+    addClass: 'fa fa-plus text-danger',
+    // Boolean,是否显示编辑按钮
+    showEdit: true,
+    // Boolean,是否显示删除按钮
+    showDelete: true,
+    // String,编辑按钮(默认依赖font-awesome)
+    editClass: 'fa fa-edit',
+    // String,删除按钮(默认依赖font-awesome)
+    deleteClass: 'fa fa-trash-o'
 }
 ```
 
