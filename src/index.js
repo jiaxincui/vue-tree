@@ -1,4 +1,4 @@
-import VueTree from './components/Vue-tree.vue';
+import VueTree from './components/VueTree.vue';
 
 VueTree.install = function(Vue) {
     Vue.component('vue-tree', VueTree)
