@@ -67,51 +67,49 @@ export default {
                 name: '根目录[1]',
                 id: 1,
                 children: [
-                    { name: '一级节点[2]', id: 2},
-                    { name: '一级节点[3]', id: 3},
                     {
-                        name: '二级节点[4]', id: 4,
+                        name: '一级节点[4]', id: 4,
                         children: [
                             {
-                                name: '三级节点[5]', id: 5,
+                                name: '二级节点[5]', id: 5,
                                 children: [
-                                    { name: '四级节点[6]', id: 6},
-                                    { name: '四级节点[8]', id: 8},
-                                    { name: '四级节点[30]', id: 30},
+                                    { name: '三级节点[6]', id: 6},
+                                    { name: '三级节点[8]', id: 8},
+                                    { name: '三级节点[30]', id: 30},
                                     {
-                                        name: '四级节点[31]',
+                                        name: '三级节点[31]',
                                         id: 31,
                                         children: [
-                                            { name: '五级节点[36]', id: 36},
-                                            { name: '五级节点[38]', id: 38},
-                                            { name: '五级节点[39]', id: 39},
-                                            { name: '五级节点[48]', id: 48},
+                                            { name: '四级节点[36]', id: 36},
+                                            { name: '四级节点[38]', id: 38},
+                                            { name: '四级节点[39]', id: 39},
+                                            { name: '四级节点[48]', id: 48},
                                         ]
                                     }
                                 ]
                             },
-                            { name: '三级节点[9]', id: 9},
-                            { name: '三级节点[10]', id: 10},
+                            { name: '二级节点[9]', id: 9},
+                            { name: '二级节点[10]', id: 10},
                             {
-                                name: '三级节点[11]', id: 11,
+                                name: '二级节点[11]', id: 11,
                                 children: [
-                                    { name: '四级节点[12]', id: 12},
-                                    { name: '四级节点[13]', id: 13},
+                                    { name: '三级节点[12]', id: 12},
+                                    { name: '三级节点[13]', id: 13},
                                     {
-                                        name: '四级节点[14]', id: 14,
+                                        name: '三级节点[14]', id: 14,
                                         children: [
-                                            { name: '五级节点[15]', id: 15},
-                                            { name: '五级节点[16]', id: 16},
-                                            { name: '五级节点[17]', id: 17},
-                                            { name: '五级节点[18]', id: 18},
+                                            { name: '四级节点[15]', id: 15},
+                                            { name: '四级节点[16]', id: 16},
+                                            { name: '四级节点[17]', id: 17},
+                                            { name: '四级节点[18]', id: 18},
                                             {
-                                                name: '五级节点[19]', id: 19,
+                                                name: '四级节点[19]', id: 19,
                                                 children: [
-                                                    { name: '六级节点[20]', id: 20},
-                                                    { name: '六级节点[21]', id: 21},
-                                                    { name: '六级节点[22]', id: 22},
-                                                    { name: '六级节点[23]', id: 23},
-                                                    { name: '六级节点[24]', id: 24},
+                                                    { name: '五级节点[20]', id: 20},
+                                                    { name: '五级节点[21]', id: 21},
+                                                    { name: '五级节点[22]', id: 22},
+                                                    { name: '五级节点[23]', id: 23},
+                                                    { name: '五级节点[24]', id: 24},
                                                 ]
                                             },
                                         ]
@@ -119,14 +117,26 @@ export default {
                                 ]
                             }
                         ]
-                    }
+                    },
+                    { name: '一级节点[2]', id: 2},
+                    {
+                        name: '一级节点[59]', id: 59,
+                        children: [
+                            { name: '二级节点[60]', id: 60},
+                            { name: '二级节点[61]', id: 61},
+                            { name: '二级节点[62]', id: 62},
+                            { name: '二级节点[63]', id: 63},
+                            { name: '二级节点[64]', id: 64},
+                        ]
+                    },
+                    { name: '一级节点[3]', id: 3},
                 ]
             },
             options: {
                 itemName: 'name',
                 addItem: true,
                 checkbox: true,
-                checkedIds: [10,12,8],
+                checkedIds: [8,10,12],
                 checkedOpen: true,
                 folderBold: true,
                 openClass: 'fa fa-plus-square text-danger',
