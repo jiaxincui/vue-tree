@@ -38,14 +38,17 @@ npm install vue-simple-tree --sve-dev
 ## 数据格式
 
 `tree.json`
+> `id`必要字段,且只能以`id`表示
+
+> `name`必要字段,默认`name`,如要自定义如`display_name`,在`options`里定义`itemName:'display_name'`
+
+> `children`非必要,如果有以数组表示
+
 ```json
 {
 "data": {
-    // id,必须字段，且字段名只能是id
     "id": "1",
-    // name,必须字段，字段名可任意如display_name，如不是默认name须在options.itemName设置
     "name": "Root",
-    // children,非必需，如果有以数组出现
     "children": [
       {
         "id": "2",
