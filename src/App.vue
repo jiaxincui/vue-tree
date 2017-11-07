@@ -10,6 +10,7 @@
                   <vue-tree :tree-data="treeData"
                             :options="options"
                             @add-a-child="addAChild"
+                            @item-click="itemClick"
                             @item-edit="itemEdit"
                             @item-delete="itemDelete">
                   </vue-tree>
@@ -17,11 +18,6 @@
               <div class="col-md-6">
                   <p class="lead">设置</p>
                   <div class="form-group">
-                      <div class="checkbox">
-                          <label>
-                              <input type="checkbox" v-model="options.addItem"> 显示添加节点按钮
-                          </label>
-                      </div>
                       <div class="checkbox">
                           <label>
                               <input type="checkbox" v-model="options.checkbox"> 显示复选框
@@ -35,6 +31,11 @@
                       <div class="checkbox">
                           <label>
                               <input type="checkbox" v-model="options.folderBold"> 目录是否加粗显示
+                          </label>
+                      </div>
+                      <div class="checkbox">
+                          <label>
+                              <input type="checkbox" v-model="options.showAdd"> 显示添加节点按钮
                           </label>
                       </div>
                       <div class="checkbox">
@@ -134,18 +135,18 @@ export default {
             },
             options: {
                 itemName: 'name',
-                addItem: true,
                 checkbox: true,
                 checkedIds: [8,10,12],
                 checkedOpen: true,
                 folderBold: true,
-                openClass: 'fa fa-plus-square text-danger',
-                closeClass: 'fa fa-minus-square text-info',
-                addClass: 'fa fa-plus text-danger',
+                showAdd: true,
                 showEdit: true,
                 showDelete: true,
+                addClass: 'fa fa-plus-square-o',
                 editClass: 'fa fa-edit',
-                deleteClass: 'fa fa-trash-o'
+                deleteClass: 'fa fa-trash-o',
+                openClass: 'fa fa-angle-right',
+                closeClass: 'fa fa-angle-down'
             },
             message: []
         }
@@ -153,6 +154,9 @@ export default {
     methods: {
         addAChild(id) {
             this.message.push('点击了添加子节点按钮，父节点ID[' + id + ']')
+        },
+        itemClick(id) {
+            this.message.push('点击了节点，节点ID[' + id + ']')
         },
         itemEdit(id) {
             this.message.push('点击了编辑按钮，节点ID[' + id + ']')
