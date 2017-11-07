@@ -3,6 +3,7 @@
         <tree-item :model="treeData"
                    :options="termOptions"
                    @add-a-child="addAChild"
+                   @item-click="itemClick"
                    @item-edit="itemEdit"
                    @item-delete="itemDelete">
         </tree-item>
@@ -26,18 +27,18 @@
             return {
                 defaultOptions: {
                     itemName: 'name',
-                    addItem: true,
                     checkbox: true,
                     checkedIds: [],
                     checkedOpen: true,
                     folderBold: true,
-                    openClass: 'fa fa-plus-square text-danger',
-                    closeClass: 'fa fa-minus-square text-info',
-                    addClass: 'fa fa-plus text-danger',
+                    showAdd: true,
                     showEdit: true,
                     showDelete: true,
+                    addClass: 'fa fa-plus-square-o',
                     editClass: 'fa fa-edit',
-                    deleteClass: 'fa fa-trash-o'
+                    deleteClass: 'fa fa-trash-o',
+                    openClass: 'fa fa-angle-right',
+                    closeClass: 'fa fa-angle-down'
                 },
                 termOptions: {}
             }
@@ -48,6 +49,9 @@
         methods:{
             addAChild(id){
                 this.$emit('add-a-child', id)
+            },
+            itemClick(id){
+                this.$emit('item-click', id)
             },
             itemEdit(id) {
                 this.$emit('item-edit', id)

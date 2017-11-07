@@ -1,19 +1,23 @@
 <template>
     <li class="vue-tree-item">
         <div class="item-wrapper" onselectstart="return false;">
-            <span v-if="options.checkbox">
-                <input type="checkbox" :value="model.id" v-model="checked" @change="change">
-            </span>
-            <span :class="isBold"
-                  @click="toggle"
-                  @dblclick="changeType">{{model[options.itemName]}}
-            </span>
             <span class="item-toggle"
                   v-if="isFolder"
                   @click="toggle">
                 <i :class="[open ? options.closeClass : options.openClass]"></i>
             </span>
+            <span class="item-toggle" v-else> </span>
+            <span class="item-checkbox" v-if="options.checkbox">
+                <input type="checkbox" :value="model.id" v-model="checked" @change="change">
+            </span>
+            <span :class="isBold"
+                  @click="itemClick">{{model[options.itemName]}}
+            </span>
             <span class="item-btn">
+                <i class="add-btn"
+                   v-if="options.showAdd"
+                   @click="addChild"
+                   :class="[options.addClass]"></i>&nbsp;
                 <i class="edit-btn"
                    v-if="options.showEdit"
                    @click="itemEdit"
@@ -31,13 +35,11 @@
                        @child-checked="childChecked"
                        @half-checked="halfChecked"
                        @add-a-child="emitAddChild"
+                       @item-click="emitItemClick"
                        @item-edit="emitItemEdit"
                        @item-delete="emitItemDelete"
                        :key="model.id">
             </tree-item>
-            <li class="tree-add" @click="addChild" v-if="options.addItem">
-                <small><i :class="[options.addClass]"></i></small>
-            </li>
         </ul>
     </li>
 </template>
@@ -85,6 +87,9 @@
                     return
                 }
             },
+            itemClick() {
+                this.emitItemClick(this.model.id)
+            },
             addChild() {
                 this.emitAddChild(this.model.id)
             },
@@ -93,6 +98,9 @@
             },
             itemDelete() {
                 this.emitItemDelete(this.model.id)
+            },
+            emitItemClick(id) {
+                this.$emit('item-click', id)
             },
             emitItemEdit(id) {
                 this.$emit('item-edit', id)
@@ -249,5 +257,15 @@
     }
     .item-bold {
         font-weight: bold
+    }
+    .item-toggle {
+        display: inline-block;
+        line-height: 100%;
+        width: 20px;
+        overflow: hidden
+    }
+    .vue-tree-list {
+        list-style: none;
+        padding-left: 20px
     }
 </style>

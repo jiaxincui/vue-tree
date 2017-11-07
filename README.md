@@ -13,13 +13,12 @@
 不止这些，
 
 - 增删改事件支持
+- 可选的增删改功能
 - 复选框显示可选
 - 初始化勾选
 - 可选的按钮图标
-- 支持双击添加子节点
 - 父节点半选状态
 - 自定义显示字段
-- 增、删、改显示可选
 - ...
 
 
@@ -186,22 +185,21 @@ options: {
 
 ## 事件
 
-`add-a-child`、 `item-edit` 、`item-delete` 分别为添加子节点、编辑节点、删除节点事件。
+`item-click`、`add-a-child`、 `item-edit` 、`item-delete` 分别为点击节点、添加子节点、编辑节点、删除节点事件。
 
-这3个事件唯一做的就是传递当前id到监听器，`增`、`删`、`改`操作在自定义的监听方法里处理后更新`treeData`并传递到视图。
+这些事件绑定了操作id到监听器
 
 ## 监听器
 
 如果需要，你可以选择绑定这些事件的其中一个或多个。
 
-> 注意:叶子节点双击事件也会触发`add-a-child`
-
 ```html
 <vue-tree 
-    :tree-data="treeData" 
-    :options="options" 
-    @add-a-child="addAChild" 
-    @item-edit="itemEdit" 
+    :tree-data="treeData"
+    :options="options"
+    @add-a-child="addAChild"
+    @item-click="itemClick"
+    @item-edit="itemEdit"
     @item-delete="itemDelete">
 </vue-tree>
 ```
@@ -212,6 +210,9 @@ options: {
 methods: {
     addAChild(id) {
         console.log('点击了添加子节点按钮，父节点ID[' + id + ']')
+    },
+    itemClick(id) {
+        console.log('点击了节点，节点ID[' + id + ']')
     },
     itemEdit(id) {
         console.log('点击了编辑按钮，节点ID[' + id + ']')
@@ -235,13 +236,13 @@ methods: {
 
 `.vue-tree .item-wrapper .item-btn`
 
+`.vue-tree .item-wrapper .item-btn .add-btn`
+
 `.vue-tree .item-wrapper .item-btn .edit-btn`
 
 `.vue-tree .item-wrapper .item-btn .delete-btn`
 
 `.vue-tree-list`
-
-`.vue-tree-list .tree-add`
 
 ## License
 
