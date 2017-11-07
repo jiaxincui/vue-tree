@@ -1,0 +1,28 @@
+.vue-tree {
+    list-style-type: none
+}
+.vue-tree-list {
+    list-style-type: none;
+    padding-left: 20px
+}
+.vue-tree-item {
+    cursor: pointer;
+    padding: 5px
+}
+.item-wrapper:hover .item-btn {
+    display: inline
+}
+.item-btn {
+    display: none;
+    padding-left: 20px
+}
+.item-bold {
+    font-weight: bold
+}
+.item-toggle {
+    display: inline-block;
+    width: 16px;
+    height: 100%;
+    line-height: 100%;
+    overflow: hidden
+}

@@ -242,30 +242,3 @@
         }
     }
 </script>
-
-<style scoped>
-    .vue-tree-item {
-        cursor: pointer;
-        padding: 5px
-    }
-    .item-btn {
-        display: none;
-        padding-left: 20px
-    }
-    .item-wrapper:hover .item-btn {
-        display: inline
-    }
-    .item-bold {
-        font-weight: bold
-    }
-    .item-toggle {
-        display: inline-block;
-        line-height: 100%;
-        width: 20px;
-        overflow: hidden
-    }
-    .vue-tree-list {
-        list-style: none;
-        padding-left: 20px
-    }
-</style>

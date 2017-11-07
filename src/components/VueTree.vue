@@ -12,6 +12,7 @@
 
 <script>
     import Item from './Item.vue'
+    import '../vue-tree.css'
 
     export default {
         props: {
@@ -74,9 +75,3 @@
         }
     }
 </script>
-
-<style scoped>
-    .vue-tree {
-        list-style-type: none
-    }
-</style>
