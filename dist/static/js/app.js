@@ -327,9 +327,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACt
 
     props: {
         model: {
-            type: Array,
+            type: Object,
             default: function () {
-                return [];
+                return {};
             }
         },
         options: {
