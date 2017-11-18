@@ -47,7 +47,7 @@ npm install vue-simple-tree --sve-dev
 
 ```json
 {
-"data": {
+"data": [{
     "id": "1",
     "name": "Root",
     "children": [
@@ -70,7 +70,7 @@ npm install vue-simple-tree --sve-dev
         ]
       }
     ]
-  }
+  }]
 }
 ```
 

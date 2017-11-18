@@ -46,40 +46,58 @@
 <script>
     export default {
         name: 'tree-item',
+
         props: {
-            model: Object,
-            options: Object,
+            model: {
+                type: Array,
+                default: function () {
+                    return []
+                }
+            },
+            options: {
+                type: Object,
+                default: function () {
+                    return {}
+                }
+            }
         },
+
         data() {
             return {
                 open: false,
                 checked: false
             }
         },
+
         created() {
             if (this.options.checkbox) {
                 this.idsChange(this.options.checkedIds)
             }
         },
+
         computed: {
             isFolder() {
                 return this.model.children && this.model.children.length
             },
+
             isBold() {
                 return {
                     'item-bold': this.isFolder && this.options.folderBold
                 }
             },
+
             checkedIds() {
                 return this.options.checkedIds
             }
         },
+
         methods: {
             toggle() {
                 if (this.isFolder) {
                     this.open = !this.open
                 }
             },
+
             changeType() {
                 if (!this.isFolder && this.options.addItem) {
                     this.emitAddChild(this.model.id)
@@ -87,30 +105,38 @@
                     return
                 }
             },
+
             itemClick() {
                 this.emitItemClick(this.model.id)
             },
+
             addChild() {
                 this.emitAddChild(this.model.id)
             },
             itemEdit() {
                 this.emitItemEdit(this.model.id)
             },
+
             itemDelete() {
                 this.emitItemDelete(this.model.id)
             },
+
             emitItemClick(id) {
                 this.$emit('item-click', id)
             },
+
             emitItemEdit(id) {
                 this.$emit('item-edit', id)
             },
+
             emitItemDelete(id) {
                 this.$emit('item-delete', id)
             },
+
             emitAddChild(id) {
                 this.$emit('add-a-child', id)
             },
+
             change(event) {
                 if (event.target.checked) {
                     this.addChecked(this.model.id);
@@ -120,15 +146,18 @@
                     this.allChildDelete(this.model)
                 }
             },
+
             addChecked(id) {
                 if (this.options.checkedIds.indexOf(id) < 0) {
                     this.$set(this.options.checkedIds, this.options.checkedIds.length, id);
                 }
             },
+
             delChecked(id) {
                 let index = this.options.checkedIds.indexOf(id);
                 if (index >= 0) this.$delete(this.options.checkedIds, index);
             },
+
             setHalfChecked(id) {
                 this.$nextTick(function () {
                     let inputs = document.getElementsByTagName('input');
@@ -140,9 +169,11 @@
                     }
                 })
             },
+
             halfChecked() {
                 this.setHalfChecked(this.model.id)
             },
+
             deleteHalfChecked(id) {
                 this.$nextTick(function () {
                     let inputs = document.getElementsByTagName('input');
@@ -151,6 +182,7 @@
                     }
                 })
             },
+
             childChecked(checked) {
                 if (checked) {
                     this.addChecked(this.model.id);
@@ -199,6 +231,7 @@
                     }
                 }
             },
+
             allChildAdd(item) {
                 if (item.children && item.children.length) {
                     for (let i = 0, len = item.children.length; i < len; i++) {
@@ -207,6 +240,7 @@
                     }
                 }
             },
+
             allChildDelete(item) {
                 if (item.children && item.children.length) {
                     for (let i = 0, len = item.children.length; i < len; i++) {
@@ -215,6 +249,7 @@
                     }
                 }
             },
+
             allChildIds(item, res) {
                 if (item.children && item.children.length) {
                     for (let i = 0, len = item.children.length; i < len; i++) {
@@ -224,6 +259,7 @@
                 }
                 return res;
             },
+
             idsChange(val) {
                 if (val.indexOf(this.model.id) >= 0) {
                     this.checked = true;
@@ -237,6 +273,7 @@
                 }
             }
         },
+
         watch: {
             checkedIds: 'idsChange'
         }

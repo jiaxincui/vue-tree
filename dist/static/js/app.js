@@ -39,7 +39,12 @@ var esExports = { render: render, staticRenderFns: staticRenderFns }
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     props: {
-        treeData: Object,
+        treeData: {
+            type: Array,
+            default: function () {
+                return [];
+            }
+        },
         options: {
             type: Object,
             default: function () {
@@ -319,40 +324,58 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACt
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     name: 'tree-item',
+
     props: {
-        model: Object,
-        options: Object
+        model: {
+            type: Array,
+            default: function () {
+                return [];
+            }
+        },
+        options: {
+            type: Object,
+            default: function () {
+                return {};
+            }
+        }
     },
+
     data() {
         return {
             open: false,
             checked: false
         };
     },
+
     created() {
         if (this.options.checkbox) {
             this.idsChange(this.options.checkedIds);
         }
     },
+
     computed: {
         isFolder() {
             return this.model.children && this.model.children.length;
         },
+
         isBold() {
             return {
                 'item-bold': this.isFolder && this.options.folderBold
             };
         },
+
         checkedIds() {
             return this.options.checkedIds;
         }
     },
+
     methods: {
         toggle() {
             if (this.isFolder) {
                 this.open = !this.open;
             }
         },
+
         changeType() {
             if (!this.isFolder && this.options.addItem) {
                 this.emitAddChild(this.model.id);
@@ -360,30 +383,38 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACt
                 return;
             }
         },
+
         itemClick() {
             this.emitItemClick(this.model.id);
         },
+
         addChild() {
             this.emitAddChild(this.model.id);
         },
         itemEdit() {
             this.emitItemEdit(this.model.id);
         },
+
         itemDelete() {
             this.emitItemDelete(this.model.id);
         },
+
         emitItemClick(id) {
             this.$emit('item-click', id);
         },
+
         emitItemEdit(id) {
             this.$emit('item-edit', id);
         },
+
         emitItemDelete(id) {
             this.$emit('item-delete', id);
         },
+
         emitAddChild(id) {
             this.$emit('add-a-child', id);
         },
+
         change(event) {
             if (event.target.checked) {
                 this.addChecked(this.model.id);
@@ -393,15 +424,18 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACt
                 this.allChildDelete(this.model);
             }
         },
+
         addChecked(id) {
             if (this.options.checkedIds.indexOf(id) < 0) {
                 this.$set(this.options.checkedIds, this.options.checkedIds.length, id);
             }
         },
+
         delChecked(id) {
             let index = this.options.checkedIds.indexOf(id);
             if (index >= 0) this.$delete(this.options.checkedIds, index);
         },
+
         setHalfChecked(id) {
             this.$nextTick(function () {
                 let inputs = document.getElementsByTagName('input');
@@ -413,9 +447,11 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACt
                 }
             });
         },
+
         halfChecked() {
             this.setHalfChecked(this.model.id);
         },
+
         deleteHalfChecked(id) {
             this.$nextTick(function () {
                 let inputs = document.getElementsByTagName('input');
@@ -424,6 +460,7 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACt
                 }
             });
         },
+
         childChecked(checked) {
             if (checked) {
                 this.addChecked(this.model.id);
@@ -472,6 +509,7 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACt
                 }
             }
         },
+
         allChildAdd(item) {
             if (item.children && item.children.length) {
                 for (let i = 0, len = item.children.length; i < len; i++) {
@@ -480,6 +518,7 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACt
                 }
             }
         },
+
         allChildDelete(item) {
             if (item.children && item.children.length) {
                 for (let i = 0, len = item.children.length; i < len; i++) {
@@ -488,6 +527,7 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACt
                 }
             }
         },
+
         allChildIds(item, res) {
             if (item.children && item.children.length) {
                 for (let i = 0, len = item.children.length; i < len; i++) {
@@ -497,6 +537,7 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACt
             }
             return res;
         },
+
         idsChange(val) {
             if (val.indexOf(this.model.id) >= 0) {
                 this.checked = true;
@@ -510,6 +551,7 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACt
             }
         }
     },
+
     watch: {
         checkedIds: 'idsChange'
     }

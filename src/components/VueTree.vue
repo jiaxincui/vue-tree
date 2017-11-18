@@ -19,7 +19,12 @@
 
     export default {
         props: {
-            treeData: Object,
+            treeData: {
+                type: Array,
+                default: function () {
+                    return []
+                }
+            },
             options: {
                 type: Object,
                 default: function () {
