@@ -1,11 +1,13 @@
 <template>
     <ul class="vue-tree">
-        <tree-item :model="treeData"
-                   :options="termOptions"
-                   @add-a-child="addAChild"
-                   @item-click="itemClick"
-                   @item-edit="itemEdit"
-                   @item-delete="itemDelete">
+        <tree-item
+                v-for="item in treeData"
+                :model="item"
+                :options="termOptions"
+                @add-a-child="addAChild"
+                @item-click="itemClick"
+                @item-edit="itemEdit"
+                @item-delete="itemDelete">
         </tree-item>
     </ul>
 </template>

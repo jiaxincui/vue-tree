@@ -2,6 +2,8 @@
 
 > A simple tree component for vue.js
 
+**2.0版本增加multi tree支持,注意:此版本绑定的tree数据结构有所变化,加入了`[]`包裹,以支持multi tree**
+
 ## 介绍
 
 一个简单灵活的vue.js树形组件，可作为插件使用，也可直接`import`项目文件

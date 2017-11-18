@@ -64,7 +64,7 @@ export default {
     name: 'app',
     data () {
         return {
-            treeData:{
+            treeData:[{
                 name: '根目录[1]',
                 id: 1,
                 children: [
@@ -133,6 +133,24 @@ export default {
                     { name: '一级节点[3]', id: 3},
                 ]
             },
+            {
+                name: '根目录[99]',
+                id: 99,
+                children: [
+                    { name: '二级节点[70]', id: 70},
+                    { name: '二级节点[71]', id: 71},
+                    { name: '二级节点[72]', id: 72},
+                    { name: '二级节点[73]', id: 73},
+                    {
+                        name: '二级节点[74]',
+                        id: 74,
+                        children: [
+                            { name: '三级节点[82]', id: 82},
+                            { name: '三级节点[83]', id: 83}
+                            ]
+                    },
+                ]
+            }],
             options: {
                 itemName: 'name',
                 checkbox: true,
