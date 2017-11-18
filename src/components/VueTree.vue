@@ -7,7 +7,8 @@
                 @add-a-child="addAChild"
                 @item-click="itemClick"
                 @item-edit="itemEdit"
-                @item-delete="itemDelete">
+                @item-delete="itemDelete"
+                :key="item.id">
         </tree-item>
     </ul>
 </template>
