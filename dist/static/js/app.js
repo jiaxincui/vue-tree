@@ -32,6 +32,7 @@ var esExports = { render: render, staticRenderFns: staticRenderFns }
 //
 //
 //
+//
 
 
 
@@ -103,7 +104,7 @@ var esExports = { render: render, staticRenderFns: staticRenderFns }
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"vue-tree"},_vm._l((_vm.treeData),function(item){return _c('tree-item',{attrs:{"model":item,"options":_vm.termOptions},on:{"add-a-child":_vm.addAChild,"item-click":_vm.itemClick,"item-edit":_vm.itemEdit,"item-delete":_vm.itemDelete}})}))}
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"vue-tree"},_vm._l((_vm.treeData),function(item){return _c('tree-item',{key:item.id,attrs:{"model":item,"options":_vm.termOptions},on:{"add-a-child":_vm.addAChild,"item-click":_vm.itemClick,"item-edit":_vm.itemEdit,"item-delete":_vm.itemDelete}})}))}
 var staticRenderFns = []
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
