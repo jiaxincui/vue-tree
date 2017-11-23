@@ -32,6 +32,8 @@
             <tree-item v-for="item in model.children"
                        :model="item"
                        :options="options"
+                       :ids="ids"
+                       :ids-with-parent="idsWithParent"
                        @child-checked="childChecked"
                        @half-checked="halfChecked"
                        @add-a-child="emitAddChild"
@@ -48,12 +50,27 @@
         name: 'tree-item',
 
         props: {
+            ids: {
+                type: Array,
+                default: function () {
+                    return []
+                }
+            },
+
+            idsWithParent: {
+                type: Array,
+                default: function () {
+                    return []
+                }
+            },
+
             model: {
                 type: Object,
                 default: function () {
                     return {}
                 }
             },
+
             options: {
                 type: Object,
                 default: function () {
@@ -87,7 +104,7 @@
             },
 
             checkedIds() {
-                return this.options.checkedIds
+                return this.idsWithParent
             }
         },
 
@@ -140,22 +157,37 @@
             change(event) {
                 if (event.target.checked) {
                     this.addChecked(this.model.id);
+                    if (! (this.isFolder && this.options.idsWithParent)) {
+                        this.addId(this.model.id)
+                    }
                     this.allChildAdd(this.model)
                 } else {
                     this.delChecked(this.model.id);
+                    this.delId(this.model.id)
                     this.allChildDelete(this.model)
                 }
             },
 
+            addId(id) {
+                if (this.ids.indexOf(id) < 0) {
+                    this.$set(this.ids, this.ids.length, id);
+                }
+            },
+
+            delId(id) {
+                let index = this.ids.indexOf(id);
+                if (index >= 0) this.$delete(this.ids, index);
+            },
+
             addChecked(id) {
-                if (this.options.checkedIds.indexOf(id) < 0) {
-                    this.$set(this.options.checkedIds, this.options.checkedIds.length, id);
+                if (this.idsWithParent.indexOf(id) < 0) {
+                    this.$set(this.idsWithParent, this.idsWithParent.length, id);
                 }
             },
 
             delChecked(id) {
-                let index = this.options.checkedIds.indexOf(id);
-                if (index >= 0) this.$delete(this.options.checkedIds, index);
+                let index = this.idsWithParent.indexOf(id);
+                if (index >= 0) this.$delete(this.idsWithParent, index);
             },
 
             setHalfChecked(id) {
@@ -224,6 +256,7 @@
                         }
                         if (noneChild) {
                             this.delChecked(this.model.id);
+                            this.delId(this.model.id);
                             this.deleteHalfChecked(this.model.id)
                         }
                     } else {
@@ -236,6 +269,9 @@
                 if (item.children && item.children.length) {
                     for (let i = 0, len = item.children.length; i < len; i++) {
                         this.addChecked(item.children[i].id);
+                        if (!((item.children[i].children && item.children[i].children.length) && this.options.idsWithParent)) {
+                            this.addId(item.children[i].id)
+                        }
                         this.allChildAdd(item.children[i]);
                     }
                 }
@@ -245,6 +281,7 @@
                 if (item.children && item.children.length) {
                     for (let i = 0, len = item.children.length; i < len; i++) {
                         this.delChecked(item.children[i].id);
+                        this.delId(item.children[i].id);
                         this.allChildDelete(item.children[i]);
                     }
                 }

@@ -8,6 +8,7 @@
               </div>
               <div class="col-md-6">
                   <vue-tree :tree-data="treeData"
+                            v-model="ids"
                             :options="options"
                             @add-a-child="addAChild"
                             @item-click="itemClick"
@@ -52,7 +53,7 @@
                   <p class="lead">事件</p>
                   <p v-for="item in message"><mark>{{item}}</mark></p>
                   <p class="lead">Options</p>
-                  <p>{{ options}}</p>
+                  <p>{{ ids}}</p>
               </div>
           </div>
       </div>
@@ -64,6 +65,7 @@ export default {
     name: 'app',
     data () {
         return {
+            ids: [],
             treeData:[{
                 name: '根目录[1]',
                 id: 1,
@@ -154,7 +156,6 @@ export default {
             options: {
                 itemName: 'name',
                 checkbox: true,
-                checkedIds: [8,10,12],
                 checkedOpen: true,
                 folderBold: true,
                 showAdd: true,

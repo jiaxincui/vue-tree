@@ -2,6 +2,8 @@
     <ul class="vue-tree">
         <tree-item
                 v-for="item in treeData"
+                :ids="ids"
+                :ids-with-parent="idsWithParent"
                 :model="item"
                 :options="termOptions"
                 @add-a-child="addAChild"
@@ -18,6 +20,10 @@
     import '../vue-tree.css'
 
     export default {
+        model: {
+            prop: 'ids',
+            event: 'change'
+        },
         props: {
             treeData: {
                 type: Array,
@@ -29,6 +35,12 @@
                 type: Object,
                 default: function () {
                     return {}
+                }
+            },
+            ids: {
+                type: Array,
+                default: function () {
+                    return []
                 }
             }
         },
@@ -47,9 +59,11 @@
                     editClass: 'fa fa-edit',
                     deleteClass: 'fa fa-trash-o',
                     openClass: 'fa fa-angle-right',
-                    closeClass: 'fa fa-angle-down'
+                    closeClass: 'fa fa-angle-down',
+                    idsWithParent: false
                 },
-                termOptions: {}
+                termOptions: {},
+                idsWithParent: []
             }
         },
         created () {
