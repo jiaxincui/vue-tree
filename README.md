@@ -99,7 +99,7 @@ treeData示例
           components: { VueTree },
           data () {
               return {
-                  // 复选ids
+                  // 复选ids,可传入id数组作为初始选中状态,如[3,4,8]
                   checkedIds: [],
                   // tree数据
                   treeData: Tree.data,
@@ -163,33 +163,59 @@ treeData示例
 options: {
     // String,节点显示字段
     itemName: 'name',
+    
     // Boolean,是否显示添加子节点按钮
     addItem: true,
+    
     // Boolean,是否显示选择框
     checkbox: true,
-    // Array,初始化时选中id
+    
+    // Array,初始化时选中id (v2.1以后不推荐使用，v3.0将废弃),替代方法见'#使用示例'章节
     checkedIds: [], 
+    
     // Boolean,选中时是否展开节点
     checkedOpen: true,
+    
     // Boolean,目录是否加粗显示
     folderBold: true,
+    
     // String,展开按钮(默认依赖font-awesome)
     openClass: 'fa fa-plus-square text-info',
+    
     // String,收缩按钮(默认依赖font-awesome)
     closeClass: 'fa fa-minus-square text-danger',
+    
     // String,添加节点按钮(默认依赖font-awesome)
     addClass: 'fa fa-plus text-danger',
+    
     // Boolean,是否显示编辑按钮
     showEdit: true,
+    
     // Boolean,是否显示删除按钮
     showDelete: true,
+    
     // String,编辑按钮(默认依赖font-awesome)
     editClass: 'fa fa-edit',
+    
     // String,删除按钮(默认依赖font-awesome)
     deleteClass: 'fa fa-trash-o'
+    
+    // (v2.1新增) Boolean,获取复选项目是否包含目录,默认`true`,如果只获取叶子节点设置为`false`
+    idsWithParent: true
+    
+    // (v2.1新增) Number,初始化时展开层级,根节点为0,默认0
+    depthOpen: 0
 }
 ```
-> 注意：默认设置使用了`font-awesome`的图标，以及`bootstrap`的情景颜色，如果你继续使用默认设置，请引入这两个`css`库
+> 注意：默认设置使用了`font-awesome`的图标，
+如果你继续使用默认设置，请引入这个`css`库
+  
+## 如何获取复选数据?
+
+自v2.1起,不再从options.checkedIds获取复选数据,
+而是使用`v-model="checkedIds"`获取复选id.
+
+> 默认情况下获取的ids是包含所有上级目录的,如果你想获取只包含叶子节点的ids,设置`options.idsWithParent`为`false`
 
 ## 事件
 
@@ -203,6 +229,7 @@ options: {
 
 ```html
 <vue-tree 
+    v-model="ids"
     :tree-data="treeData"
     :options="options"
     @add-a-child="addAChild"

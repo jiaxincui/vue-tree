@@ -4,7 +4,8 @@
           <div class="row">
               <div class="col-md-12 text-center">
                   <img src="./assets/logo.png">
-                  <p class="lead">vue-tree 示例</p>
+                  <p class="lead">vue-tree 示例 <a href="https://github.com/jiaxincui/vue-tree">github</a></p>
+
               </div>
               <div class="col-md-6">
                   <vue-tree :tree-data="treeData"
@@ -31,29 +32,41 @@
                       </div>
                       <div class="checkbox">
                           <label>
-                              <input type="checkbox" v-model="options.folderBold"> 目录是否加粗显示
+                              <input type="checkbox" v-model="options.folderBold"> 目录加粗
                           </label>
                       </div>
                       <div class="checkbox">
                           <label>
-                              <input type="checkbox" v-model="options.showAdd"> 显示添加节点按钮
+                              <input type="checkbox" v-model="options.idsWithParent"> 复选是否包含目录
                           </label>
                       </div>
                       <div class="checkbox">
                           <label>
-                              <input type="checkbox" v-model="options.showEdit"> 是否显示编辑按钮
+                              <input type="checkbox" v-model="options.showAdd"> 显示添加按钮
                           </label>
                       </div>
                       <div class="checkbox">
                           <label>
-                              <input type="checkbox" v-model="options.showDelete"> 是否显示删除按钮
+                              <input type="checkbox" v-model="options.showEdit"> 显示编辑按钮
+                          </label>
+                      </div>
+                      <div class="checkbox">
+                          <label>
+                              <input type="checkbox" v-model="options.showDelete"> 显示删除按钮
                           </label>
                       </div>
                   </div>
-                  <p class="lead">事件</p>
+                  <div class="form-group">
+                      <label>初始展开层级</label>
+                      <input type="number" class="form-control" v-model="options.depthOpen">
+                  </div>
+                  <h3>Events</h3>
+                  <p>点击增删改按钮试一下</p>
                   <p v-for="item in message"><mark>{{item}}</mark></p>
-                  <p class="lead">Options</p>
-                  <p>{{ ids}}</p>
+                  <h3>Checked ids</h3>
+                  <p>{{ids}}</p>
+                  <h3>Options</h3>
+                  <p>{{options}}</p>
               </div>
           </div>
       </div>
@@ -65,7 +78,24 @@ export default {
     name: 'app',
     data () {
         return {
-            ids: [48],
+            ids: [],
+
+            options: {
+                itemName: 'name',
+                checkbox: true,
+                checkedOpen: true,
+                folderBold: true,
+                showAdd: true,
+                showEdit: true,
+                showDelete: true,
+                addClass: 'fa fa-plus-square-o',
+                editClass: 'fa fa-edit',
+                deleteClass: 'fa fa-trash-o',
+                openClass: 'fa fa-angle-right',
+                closeClass: 'fa fa-angle-down',
+                idsWithParent: true,
+                depthOpen: 0
+            },
 
             treeData:[{
                 name: '根目录[1]',
@@ -154,23 +184,6 @@ export default {
                     },
                 ]
             }],
-
-            options: {
-                itemName: 'name',
-                checkbox: true,
-                checkedOpen: true,
-                folderBold: true,
-                showAdd: true,
-                showEdit: true,
-                showDelete: true,
-                addClass: 'fa fa-plus-square-o',
-                editClass: 'fa fa-edit',
-                deleteClass: 'fa fa-trash-o',
-                openClass: 'fa fa-angle-right',
-                closeClass: 'fa fa-angle-down',
-                idsWithParent: false,
-                depthOpen: 0
-            },
 
             message: []
         }

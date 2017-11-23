@@ -52,7 +52,7 @@
                     checkbox: true,
                     checkedOpen: true,
                     folderBold: true,
-                    idsWithParent: false,
+                    idsWithParent: true,
                     depthOpen: 0,
                     showAdd: true,
                     showEdit: true,
