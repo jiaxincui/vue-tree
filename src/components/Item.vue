@@ -50,20 +50,6 @@
         name: 'tree-item',
 
         props: {
-            ids: {
-                type: Array,
-                default: function () {
-                    return []
-                }
-            },
-
-            idsWithParent: {
-                type: Array,
-                default: function () {
-                    return []
-                }
-            },
-
             model: {
                 type: Object,
                 default: function () {
@@ -75,6 +61,20 @@
                 type: Object,
                 default: function () {
                     return {}
+                }
+            },
+
+            ids: {
+                type: Array,
+                default: function () {
+                    return []
+                }
+            },
+
+            idsWithParent: {
+                type: Array,
+                default: function () {
+                    return []
                 }
             }
         },
@@ -88,7 +88,7 @@
 
         created() {
             if (this.options.checkbox) {
-                this.idsChange(this.options.checkedIds)
+                this.idsChange(this.idsWithParent)
             }
         },
 
@@ -106,6 +106,10 @@
             checkedIds() {
                 return this.idsWithParent
             }
+        },
+
+        watch: {
+            checkedIds: 'idsChange'
         },
 
         methods: {
@@ -157,7 +161,7 @@
             change(event) {
                 if (event.target.checked) {
                     this.addChecked(this.model.id);
-                    if (! (this.isFolder && this.options.idsWithParent)) {
+                    if (! this.isFolder || this.options.idsWithParent) {
                         this.addId(this.model.id)
                     }
                     this.allChildAdd(this.model)
@@ -269,7 +273,7 @@
                 if (item.children && item.children.length) {
                     for (let i = 0, len = item.children.length; i < len; i++) {
                         this.addChecked(item.children[i].id);
-                        if (!((item.children[i].children && item.children[i].children.length) && this.options.idsWithParent)) {
+                        if (! (item.children[i].children && item.children[i].children.length) || this.options.idsWithParent) {
                             this.addId(item.children[i].id)
                         }
                         this.allChildAdd(item.children[i]);
@@ -309,10 +313,6 @@
                     this.$emit('child-checked', false);
                 }
             }
-        },
-
-        watch: {
-            checkedIds: 'idsChange'
         }
     }
 </script>

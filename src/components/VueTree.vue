@@ -49,7 +49,6 @@
                 defaultOptions: {
                     itemName: 'name',
                     checkbox: true,
-                    checkedIds: [],
                     checkedOpen: true,
                     folderBold: true,
                     showAdd: true,
@@ -66,9 +65,17 @@
                 idsWithParent: []
             }
         },
+
         created () {
             this.initOptions()
         },
+
+        computed: {
+            initIds() {
+                return this.ids;
+            }
+        },
+
         methods:{
             addAChild(id){
                 this.$emit('add-a-child', id)
@@ -83,10 +90,15 @@
                 this.$emit('item-delete', id)
             },
             initOptions () {
-                this.termOptions = Object.assign({}, this.defaultOptions, this.options)
+                this.termOptions = Object.assign({}, this.defaultOptions, this.options);
+//                if (! (this.termOptions.checkedIds && this.termOptions.checkedIds.length) || this.ids.length) {
+//                    this.idsWithParent = this.initIds;
+//                }
             }
         },
+
         components: {'tree-item': Item},
+
         watch: {
             options: {
                 handler: function (val, oldVal) {

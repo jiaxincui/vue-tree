@@ -65,7 +65,8 @@ export default {
     name: 'app',
     data () {
         return {
-            ids: [],
+            ids: [3,4],
+
             treeData:[{
                 name: '根目录[1]',
                 id: 1,
@@ -153,6 +154,7 @@ export default {
                     },
                 ]
             }],
+
             options: {
                 itemName: 'name',
                 checkbox: true,
@@ -165,8 +167,10 @@ export default {
                 editClass: 'fa fa-edit',
                 deleteClass: 'fa fa-trash-o',
                 openClass: 'fa fa-angle-right',
-                closeClass: 'fa fa-angle-down'
+                closeClass: 'fa fa-angle-down',
+                idsWithParent: false
             },
+
             message: []
         }
     },
@@ -174,12 +178,15 @@ export default {
         addAChild(id) {
             this.message.push('点击了添加子节点按钮，父节点ID[' + id + ']')
         },
+
         itemClick(id) {
             this.message.push('点击了节点，节点ID[' + id + ']')
         },
+
         itemEdit(id) {
             this.message.push('点击了编辑按钮，节点ID[' + id + ']')
         },
+
         itemDelete(id) {
             this.message.push('点击了删除按钮，节点ID[' + id + ']')
         }
