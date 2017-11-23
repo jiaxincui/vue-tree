@@ -2,25 +2,25 @@
 
 > A simple tree component for vue.js
 
-**2.0版本增加multi tree支持,注意:此版本绑定的tree数据结构有所变化,加入了`[]`包裹,以支持multi tree**
+**2.0版本增加multi tree支持,注意:此版本绑定的tree数据结构和1.x版本不同,2.0加入了`[]`包裹,以支持multi tree**
 
 ## 介绍
 
-一个简单灵活的vue.js树形组件，可作为插件使用，也可直接`import`项目文件
+一个简单灵活的vue.js树形组件，可作为插件使用，也可直接作为`component`使用
 
-使用时只需绑定tree数据`treeData`即可。
+使用时只需传入一个树形数据绑定。
 
-组件还提供了`增删改`事件，你可以很方便的在组件上监听。
+组件还提供了`增删改查`事件，你可以很方便的在组件上监听。
 
 不止这些，
 
-- 增删改事件支持
-- 可选的增删改功能
+- 可定制的`增删改查`事件
 - 复选框显示可选
+- 初始化展开层级
 - 初始化勾选
 - 可选的按钮图标
-- 父节点半选状态
-- 自定义显示字段
+- 父节点半选状态支持
+- 显示字段自定义
 - ...
 
 
@@ -38,13 +38,15 @@ npm install vue-simple-tree --sve-dev
 
 ## 数据格式
 
-`tree.json`
-> `id`必要字段,且只能以`id`表示
+`treeData`
 
-> `name`必要字段,默认`name`,如要自定义如`display_name`,在`options`里定义`itemName:'display_name'`
+> `id`必要属性,`Number`
 
-> `children`非必要,如果有以数组表示
+> `name`必要属性,`String`,可自定义,默认`name`,如`options.itemName:'display_name'`
 
+> `children`非必要,`Array`
+
+treeData示例
 ```json
 {
 "data": [{
@@ -85,7 +87,7 @@ npm install vue-simple-tree --sve-dev
       ```vue
       <template>
         <div id="app">
-            <vue-tree :tree-data="treeData" :options="options"></vue-tree>
+            <vue-tree v-model="checkedIds" :tree-data="treeData" :options="options"></vue-tree>
         </div>
       </template>
       
@@ -97,7 +99,9 @@ npm install vue-simple-tree --sve-dev
           components: { VueTree },
           data () {
               return {
-                  //tree数据
+                  // 复选ids
+                  checkedIds: [],
+                  // tree数据
                   treeData: Tree.data,
                   // 设置项
                   options: {}
@@ -128,7 +132,7 @@ npm install vue-simple-tree --sve-dev
     ```vue
     <template>
       <div id="app">
-          <vue-tree :tree-data="treeData" :options="options"></vue-tree>
+          <vue-tree v-model="checkedIds" :tree-data="treeData" :options="options"></vue-tree>
       </div>
     </template>
     
@@ -138,6 +142,7 @@ npm install vue-simple-tree --sve-dev
         name: 'app',
         data () {
             return {
+                checkedIds: [],
                 treeData: Tree.data,
                 options: {}
             }
@@ -148,11 +153,12 @@ npm install vue-simple-tree --sve-dev
    
 ## 设置选项
 
-以下代码中是默认设置。
+以下是默认设置.
 
-你可以在`options`里覆盖默认设置，或仅包含个别设置的项`options: {someOption: true}`
+你可以在`options`里覆盖默认设置，或仅设置若干项`options: {someOption: true}`
 
-当然如果你想继续使用默认设置，你可以不用绑定`options`或绑定一个空的对象
+你也可以绑定一个空的对象`:options="{}"`或直接忽略`options`
+
 ```
 options: {
     // String,节点显示字段

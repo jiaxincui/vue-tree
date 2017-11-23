@@ -65,7 +65,7 @@ export default {
     name: 'app',
     data () {
         return {
-            ids: [3,4],
+            ids: [48],
 
             treeData:[{
                 name: '根目录[1]',
@@ -168,7 +168,8 @@ export default {
                 deleteClass: 'fa fa-trash-o',
                 openClass: 'fa fa-angle-right',
                 closeClass: 'fa fa-angle-down',
-                idsWithParent: false
+                idsWithParent: false,
+                depthOpen: 0
             },
 
             message: []

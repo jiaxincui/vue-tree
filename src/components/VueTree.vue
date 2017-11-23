@@ -6,6 +6,7 @@
                 :ids-with-parent="idsWithParent"
                 :model="item"
                 :options="termOptions"
+                :depth="0"
                 @add-a-child="addAChild"
                 @item-click="itemClick"
                 @item-edit="itemEdit"
@@ -51,6 +52,8 @@
                     checkbox: true,
                     checkedOpen: true,
                     folderBold: true,
+                    idsWithParent: false,
+                    depthOpen: 0,
                     showAdd: true,
                     showEdit: true,
                     showDelete: true,
@@ -59,7 +62,7 @@
                     deleteClass: 'fa fa-trash-o',
                     openClass: 'fa fa-angle-right',
                     closeClass: 'fa fa-angle-down',
-                    idsWithParent: false
+
                 },
                 termOptions: {},
                 idsWithParent: []
@@ -91,9 +94,15 @@
             },
             initOptions () {
                 this.termOptions = Object.assign({}, this.defaultOptions, this.options);
-//                if (! (this.termOptions.checkedIds && this.termOptions.checkedIds.length) || this.ids.length) {
-//                    this.idsWithParent = this.initIds;
-//                }
+                if (! (this.termOptions.checkedIds && this.termOptions.checkedIds.length) || this.ids.length) {
+//                    for (let i = 0, len = this.ids.length; i < len; i++) {
+//                        this.idsWithParent.push(this.ids[i])
+//                    }
+                    this.idsWithParent = this.ids.slice(0)
+//                    this.idsWithParent = this.ids.sort();
+//                    this.$set(this.idsWithParent)
+//                    this.idsWithParent = Object.assign({}, this.idsWithParent, this.initIds)
+                }
             }
         },
 

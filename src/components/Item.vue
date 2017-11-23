@@ -33,6 +33,7 @@
                        :model="item"
                        :options="options"
                        :ids="ids"
+                       :depth="depth + 1"
                        :ids-with-parent="idsWithParent"
                        @child-checked="childChecked"
                        @half-checked="halfChecked"
@@ -62,6 +63,11 @@
                 default: function () {
                     return {}
                 }
+            },
+
+            depth: {
+                type: Number,
+                default: 0
             },
 
             ids: {
@@ -101,15 +107,11 @@
                 return {
                     'item-bold': this.isFolder && this.options.folderBold
                 }
-            },
-
-            checkedIds() {
-                return this.idsWithParent
             }
         },
 
         watch: {
-            checkedIds: 'idsChange'
+            idsWithParent: 'idsChange'
         },
 
         methods: {
@@ -190,8 +192,8 @@
             },
 
             delChecked(id) {
-                let index = this.idsWithParent.indexOf(id);
-                if (index >= 0) this.$delete(this.idsWithParent, index);
+                let idx = this.idsWithParent.indexOf(id);
+                if (idx >= 0) this.$delete(this.idsWithParent, idx);
             },
 
             setHalfChecked(id) {
@@ -222,14 +224,15 @@
             childChecked(checked) {
                 if (checked) {
                     this.addChecked(this.model.id);
+                    if (! this.isFolder || this.options.idsWithParent) {
+                        this.addId(this.model.id)
+                    }
                     let child = this.model.children;
-                    let all = false;
+                    let all = true;
                     for (let i = 0, len = child.length; i < len; i++) {
-                        if (this.checkedIds.indexOf(child[i].id) < 0) {
+                        if (this.idsWithParent.indexOf(child[i].id) < 0) {
                             all = false;
                             break;
-                        } else {
-                            all = true;
                         }
                     }
                     if (all) {
@@ -239,19 +242,17 @@
                     }
                 } else {
                     let child = this.model.children;
-                    let none = false;
+                    let none = true;
                     for (let i = 0, len = child.length; i < len; i++) {
-                        if (this.checkedIds.indexOf(child[i].id) >= 0) {
+                        if (this.idsWithParent.indexOf(child[i].id) >= 0) {
                             none = false;
                             break;
-                        } else {
-                            none = true;
                         }
                     }
                     if (none) {
                         let noneChild = true;
                         let childIds = this.allChildIds(this.model, new Array(0));
-                        let checkedIds = this.checkedIds;
+                        let checkedIds = this.idsWithParent;
                         for (let i = 0, len = checkedIds.length; i < len; i++) {
                             if (childIds.indexOf(checkedIds[i]) >= 0) {
                                 noneChild = false;
@@ -302,10 +303,16 @@
             },
 
             idsChange(val) {
+                if (this.isFolder && this.depth < this.options.depthOpen) {
+                    this.open = true
+                }
                 if (val.indexOf(this.model.id) >= 0) {
                     this.checked = true;
                     if (this.options.checkedOpen && this.isFolder) {
                         this.open = true
+                    }
+                    if (this.isFolder && ! this.options.idsWithParent) {
+                        this.delId(this.model.id)
                     }
                     this.$emit('child-checked', true);
                 } else {
