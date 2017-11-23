@@ -95,13 +95,9 @@
             initOptions () {
                 this.termOptions = Object.assign({}, this.defaultOptions, this.options);
                 if (! (this.termOptions.checkedIds && this.termOptions.checkedIds.length) || this.ids.length) {
-//                    for (let i = 0, len = this.ids.length; i < len; i++) {
-//                        this.idsWithParent.push(this.ids[i])
-//                    }
                     this.idsWithParent = this.ids.slice(0)
-//                    this.idsWithParent = this.ids.sort();
-//                    this.$set(this.idsWithParent)
-//                    this.idsWithParent = Object.assign({}, this.idsWithParent, this.initIds)
+                } else {
+                    this.idsWithParent = this.termOptions.checkedIds.slice(0)
                 }
             }
         },
