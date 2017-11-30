@@ -92,7 +92,7 @@ treeData示例
       </template>
       
       <script>
-      import VueTree from 'vue-simple-tree/src/components/Vue-tree.vue'
+      import VueTree from 'vue-simple-tree/src/components/VueTree.vue'
       import Tree from 'tree.json';
       export default {
           name: 'app',
