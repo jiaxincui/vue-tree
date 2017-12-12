@@ -111,7 +111,7 @@
         },
 
         watch: {
-            idsWithParent: 'idsChange',
+            idsWithParent: 'idsChange'
         },
 
         methods: {
