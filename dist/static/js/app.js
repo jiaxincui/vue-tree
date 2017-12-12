@@ -1,13 +1,9 @@
 webpackJsonp([0],{
 
-/***/ "1wXK":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "2tpN":
+/***/ (function(module, exports) {
 
-"use strict";
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"vue-tree"},_vm._l((_vm.treeData),function(item){return _c('tree-item',{key:item.id,attrs:{"ids":_vm.ids,"ids-with-parent":_vm.idsWithParent,"model":item,"options":_vm.termOptions,"depth":0},on:{"add-a-child":_vm.addAChild,"item-click":_vm.itemClick,"item-edit":_vm.itemEdit,"item-delete":_vm.itemDelete}})}))}
-var staticRenderFns = []
-var esExports = { render: render, staticRenderFns: staticRenderFns }
-/* harmony default export */ __webpack_exports__["a"] = (esExports);
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 
@@ -127,8 +123,14 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACt
 
     watch: {
         options: {
-            handler: function (val, oldVal) {
+            handler: function (val) {
                 this.initOptions();
+            },
+            deep: true
+        },
+        ids: {
+            handler: function (val) {
+                this.idsWithParent = val.slice(0);
             },
             deep: true
         }
@@ -142,6 +144,17 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACt
 
 "use strict";
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('li',{staticClass:"vue-tree-item"},[_c('div',{staticClass:"item-wrapper",attrs:{"onselectstart":"return false;"}},[(_vm.isFolder)?_c('span',{staticClass:"item-toggle",on:{"click":_vm.toggle}},[_c('i',{class:[_vm.open ? _vm.options.closeClass : _vm.options.openClass]})]):_c('span',{staticClass:"item-toggle"}),_vm._v(" "),(_vm.options.checkbox)?_c('span',{staticClass:"item-checkbox"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.checked),expression:"checked"}],attrs:{"type":"checkbox"},domProps:{"value":_vm.model.id,"checked":Array.isArray(_vm.checked)?_vm._i(_vm.checked,_vm.model.id)>-1:(_vm.checked)},on:{"change":[function($event){var $$a=_vm.checked,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=_vm.model.id,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.checked=$$a.concat([$$v]))}else{$$i>-1&&(_vm.checked=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}}else{_vm.checked=$$c}},_vm.change]}})]):_vm._e(),_vm._v(" "),_c('span',{class:_vm.isBold,on:{"click":_vm.itemClick}},[_vm._v(_vm._s(_vm.model[_vm.options.itemName])+"\n        ")]),_vm._v(" "),_c('span',{staticClass:"item-btn"},[(_vm.options.showAdd)?_c('i',{staticClass:"add-btn",class:[_vm.options.addClass],on:{"click":_vm.addChild}}):_vm._e(),_vm._v(" \n            "),(_vm.options.showEdit)?_c('i',{staticClass:"edit-btn",class:[_vm.options.editClass],on:{"click":_vm.itemEdit}}):_vm._e(),_vm._v(" \n            "),(_vm.options.showDelete)?_c('i',{staticClass:"delete-btn",class:[_vm.options.deleteClass],on:{"click":_vm.itemDelete}}):_vm._e()])]),_vm._v(" "),(_vm.isFolder)?_c('ul',{directives:[{name:"show",rawName:"v-show",value:(_vm.open),expression:"open"}],staticClass:"vue-tree-list"},_vm._l((_vm.model.children),function(item){return _c('tree-item',{key:_vm.model.id,attrs:{"model":item,"options":_vm.options,"ids":_vm.ids,"depth":_vm.depth + 1,"ids-with-parent":_vm.idsWithParent},on:{"child-checked":_vm.childChecked,"half-checked":_vm.halfChecked,"add-a-child":_vm.emitAddChild,"item-click":_vm.emitItemClick,"item-edit":_vm.emitItemEdit,"item-delete":_vm.emitItemDelete}})})):_vm._e()])}
+var staticRenderFns = []
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+
+/***/ }),
+
+/***/ "CgpY":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"vue-tree"},_vm._l((_vm.treeData),function(item){return _c('tree-item',{key:item.id,attrs:{"ids":_vm.ids,"ids-with-parent":_vm.idsWithParent,"model":item,"options":_vm.termOptions,"depth":0},on:{"add-a-child":_vm.addAChild,"item-click":_vm.itemClick,"item-edit":_vm.itemEdit,"item-delete":_vm.itemDelete}})}))}
 var staticRenderFns = []
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
@@ -317,9 +330,9 @@ var esExports = { render: render, staticRenderFns: staticRenderFns }
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_13_4_0_vue_loader_lib_selector_type_script_index_0_App_vue__ = __webpack_require__("Czyj");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_13_4_0_vue_loader_lib_template_compiler_index_id_data_v_f5a9c6f8_hasScoped_false_transformToRequire_video_src_source_src_img_src_image_xlink_href_buble_transforms_node_modules_vue_loader_13_4_0_vue_loader_lib_selector_type_template_index_0_App_vue__ = __webpack_require__("x3Bv");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_13_4_0_vue_loader_lib_template_compiler_index_id_data_v_52002570_hasScoped_false_transformToRequire_video_src_source_src_img_src_image_xlink_href_buble_transforms_node_modules_vue_loader_13_4_0_vue_loader_lib_selector_type_template_index_0_App_vue__ = __webpack_require__("TTPv");
 function injectStyle (ssrContext) {
-  __webpack_require__("g9Fs")
+  __webpack_require__("2tpN")
 }
 var normalizeComponent = __webpack_require__("0HdQ")
 /* script */
@@ -336,7 +349,7 @@ var __vue_scopeId__ = null
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_13_4_0_vue_loader_lib_selector_type_script_index_0_App_vue__["a" /* default */],
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_13_4_0_vue_loader_lib_template_compiler_index_id_data_v_f5a9c6f8_hasScoped_false_transformToRequire_video_src_source_src_img_src_image_xlink_href_buble_transforms_node_modules_vue_loader_13_4_0_vue_loader_lib_selector_type_template_index_0_App_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_13_4_0_vue_loader_lib_template_compiler_index_id_data_v_52002570_hasScoped_false_transformToRequire_video_src_source_src_img_src_image_xlink_href_buble_transforms_node_modules_vue_loader_13_4_0_vue_loader_lib_selector_type_template_index_0_App_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
@@ -374,10 +387,14 @@ new __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */]({
 
 /***/ }),
 
-/***/ "g9Fs":
-/***/ (function(module, exports) {
+/***/ "TTPv":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-// removed by extract-text-webpack-plugin
+"use strict";
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"app"}},[_c('div',{staticClass:"container"},[_c('div',{staticClass:"row"},[_vm._m(0),_vm._v(" "),_c('div',{staticClass:"col-md-6"},[_c('vue-tree',{attrs:{"tree-data":_vm.treeData,"options":_vm.options},on:{"add-a-child":_vm.addAChild,"item-click":_vm.itemClick,"item-edit":_vm.itemEdit,"item-delete":_vm.itemDelete},model:{value:(_vm.ids),callback:function ($$v) {_vm.ids=$$v},expression:"ids"}})],1),_vm._v(" "),_c('div',{staticClass:"col-md-6"},[_c('p',{staticClass:"lead"},[_vm._v("设置")]),_vm._v(" "),_c('div',{staticClass:"form-group"},[_c('div',{staticClass:"checkbox"},[_c('label',[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.options.checkbox),expression:"options.checkbox"}],attrs:{"type":"checkbox"},domProps:{"checked":Array.isArray(_vm.options.checkbox)?_vm._i(_vm.options.checkbox,null)>-1:(_vm.options.checkbox)},on:{"change":function($event){var $$a=_vm.options.checkbox,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=null,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.options.checkbox=$$a.concat([$$v]))}else{$$i>-1&&(_vm.options.checkbox=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}}else{_vm.$set(_vm.options, "checkbox", $$c)}}}}),_vm._v(" 显示复选框\n                        ")])]),_vm._v(" "),_c('div',{staticClass:"checkbox"},[_c('label',[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.options.checkedOpen),expression:"options.checkedOpen"}],attrs:{"type":"checkbox"},domProps:{"checked":Array.isArray(_vm.options.checkedOpen)?_vm._i(_vm.options.checkedOpen,null)>-1:(_vm.options.checkedOpen)},on:{"change":function($event){var $$a=_vm.options.checkedOpen,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=null,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.options.checkedOpen=$$a.concat([$$v]))}else{$$i>-1&&(_vm.options.checkedOpen=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}}else{_vm.$set(_vm.options, "checkedOpen", $$c)}}}}),_vm._v(" 已选择是否展开\n                        ")])]),_vm._v(" "),_c('div',{staticClass:"checkbox"},[_c('label',[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.options.folderBold),expression:"options.folderBold"}],attrs:{"type":"checkbox"},domProps:{"checked":Array.isArray(_vm.options.folderBold)?_vm._i(_vm.options.folderBold,null)>-1:(_vm.options.folderBold)},on:{"change":function($event){var $$a=_vm.options.folderBold,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=null,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.options.folderBold=$$a.concat([$$v]))}else{$$i>-1&&(_vm.options.folderBold=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}}else{_vm.$set(_vm.options, "folderBold", $$c)}}}}),_vm._v(" 目录加粗\n                        ")])]),_vm._v(" "),_c('div',{staticClass:"checkbox"},[_c('label',[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.options.idsWithParent),expression:"options.idsWithParent"}],attrs:{"type":"checkbox"},domProps:{"checked":Array.isArray(_vm.options.idsWithParent)?_vm._i(_vm.options.idsWithParent,null)>-1:(_vm.options.idsWithParent)},on:{"change":function($event){var $$a=_vm.options.idsWithParent,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=null,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.options.idsWithParent=$$a.concat([$$v]))}else{$$i>-1&&(_vm.options.idsWithParent=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}}else{_vm.$set(_vm.options, "idsWithParent", $$c)}}}}),_vm._v(" 复选是否包含目录\n                        ")])]),_vm._v(" "),_c('div',{staticClass:"checkbox"},[_c('label',[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.options.showAdd),expression:"options.showAdd"}],attrs:{"type":"checkbox"},domProps:{"checked":Array.isArray(_vm.options.showAdd)?_vm._i(_vm.options.showAdd,null)>-1:(_vm.options.showAdd)},on:{"change":function($event){var $$a=_vm.options.showAdd,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=null,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.options.showAdd=$$a.concat([$$v]))}else{$$i>-1&&(_vm.options.showAdd=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}}else{_vm.$set(_vm.options, "showAdd", $$c)}}}}),_vm._v(" 显示添加按钮\n                        ")])]),_vm._v(" "),_c('div',{staticClass:"checkbox"},[_c('label',[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.options.showEdit),expression:"options.showEdit"}],attrs:{"type":"checkbox"},domProps:{"checked":Array.isArray(_vm.options.showEdit)?_vm._i(_vm.options.showEdit,null)>-1:(_vm.options.showEdit)},on:{"change":function($event){var $$a=_vm.options.showEdit,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=null,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.options.showEdit=$$a.concat([$$v]))}else{$$i>-1&&(_vm.options.showEdit=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}}else{_vm.$set(_vm.options, "showEdit", $$c)}}}}),_vm._v(" 显示编辑按钮\n                        ")])]),_vm._v(" "),_c('div',{staticClass:"checkbox"},[_c('label',[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.options.showDelete),expression:"options.showDelete"}],attrs:{"type":"checkbox"},domProps:{"checked":Array.isArray(_vm.options.showDelete)?_vm._i(_vm.options.showDelete,null)>-1:(_vm.options.showDelete)},on:{"change":function($event){var $$a=_vm.options.showDelete,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=null,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.options.showDelete=$$a.concat([$$v]))}else{$$i>-1&&(_vm.options.showDelete=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}}else{_vm.$set(_vm.options, "showDelete", $$c)}}}}),_vm._v(" 显示删除按钮\n                        ")])])]),_vm._v(" "),_c('div',{staticClass:"form-group"},[_c('label',[_vm._v("初始展开层级")]),_vm._v(" "),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.options.depthOpen),expression:"options.depthOpen"}],staticClass:"form-control",attrs:{"type":"number"},domProps:{"value":(_vm.options.depthOpen)},on:{"input":function($event){if($event.target.composing){ return; }_vm.$set(_vm.options, "depthOpen", $event.target.value)}}})]),_vm._v(" "),_c('h3',[_vm._v("Events")]),_vm._v(" "),_c('p',[_vm._v("点击增删改按钮试一下")]),_vm._v(" "),_vm._l((_vm.message),function(item){return _c('p',[_c('mark',[_vm._v(_vm._s(item))])])}),_vm._v(" "),_c('h3',[_vm._v("Checked ids")]),_vm._v(" "),_c('p',[_vm._v(_vm._s(_vm.ids))]),_vm._v(" "),_c('h3',[_vm._v("Options")]),_vm._v(" "),_c('p',[_vm._v(_vm._s(_vm.options))])],2)])])])}
+var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"col-md-12 text-center"},[_c('img',{attrs:{"src":__webpack_require__("7Otq")}}),_vm._v(" "),_c('p',{staticClass:"lead"},[_vm._v("vue-tree 示例 "),_c('a',{attrs:{"href":"https://github.com/jiaxincui/vue-tree"}},[_vm._v("github")])])])}]
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
 
 /***/ }),
 
@@ -767,23 +784,12 @@ var Component = normalizeComponent(
 
 /***/ }),
 
-/***/ "x3Bv":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"app"}},[_c('div',{staticClass:"container"},[_c('div',{staticClass:"row"},[_vm._m(0),_vm._v(" "),_c('div',{staticClass:"col-md-6"},[_c('vue-tree',{attrs:{"tree-data":_vm.treeData,"options":_vm.options},on:{"add-a-child":_vm.addAChild,"item-click":_vm.itemClick,"item-edit":_vm.itemEdit,"item-delete":_vm.itemDelete},model:{value:(_vm.ids),callback:function ($$v) {_vm.ids=$$v},expression:"ids"}})],1),_vm._v(" "),_c('div',{staticClass:"col-md-6"},[_c('p',{staticClass:"lead"},[_vm._v("设置")]),_vm._v(" "),_c('div',{staticClass:"form-group"},[_c('div',{staticClass:"checkbox"},[_c('label',[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.options.checkbox),expression:"options.checkbox"}],attrs:{"type":"checkbox"},domProps:{"checked":Array.isArray(_vm.options.checkbox)?_vm._i(_vm.options.checkbox,null)>-1:(_vm.options.checkbox)},on:{"change":function($event){var $$a=_vm.options.checkbox,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=null,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.options.checkbox=$$a.concat([$$v]))}else{$$i>-1&&(_vm.options.checkbox=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}}else{_vm.$set(_vm.options, "checkbox", $$c)}}}}),_vm._v(" 显示复选框\n                        ")])]),_vm._v(" "),_c('div',{staticClass:"checkbox"},[_c('label',[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.options.checkedOpen),expression:"options.checkedOpen"}],attrs:{"type":"checkbox"},domProps:{"checked":Array.isArray(_vm.options.checkedOpen)?_vm._i(_vm.options.checkedOpen,null)>-1:(_vm.options.checkedOpen)},on:{"change":function($event){var $$a=_vm.options.checkedOpen,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=null,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.options.checkedOpen=$$a.concat([$$v]))}else{$$i>-1&&(_vm.options.checkedOpen=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}}else{_vm.$set(_vm.options, "checkedOpen", $$c)}}}}),_vm._v(" 已选择是否展开\n                        ")])]),_vm._v(" "),_c('div',{staticClass:"checkbox"},[_c('label',[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.options.folderBold),expression:"options.folderBold"}],attrs:{"type":"checkbox"},domProps:{"checked":Array.isArray(_vm.options.folderBold)?_vm._i(_vm.options.folderBold,null)>-1:(_vm.options.folderBold)},on:{"change":function($event){var $$a=_vm.options.folderBold,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=null,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.options.folderBold=$$a.concat([$$v]))}else{$$i>-1&&(_vm.options.folderBold=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}}else{_vm.$set(_vm.options, "folderBold", $$c)}}}}),_vm._v(" 目录加粗\n                        ")])]),_vm._v(" "),_c('div',{staticClass:"checkbox"},[_c('label',[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.options.idsWithParent),expression:"options.idsWithParent"}],attrs:{"type":"checkbox"},domProps:{"checked":Array.isArray(_vm.options.idsWithParent)?_vm._i(_vm.options.idsWithParent,null)>-1:(_vm.options.idsWithParent)},on:{"change":function($event){var $$a=_vm.options.idsWithParent,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=null,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.options.idsWithParent=$$a.concat([$$v]))}else{$$i>-1&&(_vm.options.idsWithParent=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}}else{_vm.$set(_vm.options, "idsWithParent", $$c)}}}}),_vm._v(" 复选是否包含目录\n                        ")])]),_vm._v(" "),_c('div',{staticClass:"checkbox"},[_c('label',[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.options.showAdd),expression:"options.showAdd"}],attrs:{"type":"checkbox"},domProps:{"checked":Array.isArray(_vm.options.showAdd)?_vm._i(_vm.options.showAdd,null)>-1:(_vm.options.showAdd)},on:{"change":function($event){var $$a=_vm.options.showAdd,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=null,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.options.showAdd=$$a.concat([$$v]))}else{$$i>-1&&(_vm.options.showAdd=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}}else{_vm.$set(_vm.options, "showAdd", $$c)}}}}),_vm._v(" 显示添加按钮\n                        ")])]),_vm._v(" "),_c('div',{staticClass:"checkbox"},[_c('label',[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.options.showEdit),expression:"options.showEdit"}],attrs:{"type":"checkbox"},domProps:{"checked":Array.isArray(_vm.options.showEdit)?_vm._i(_vm.options.showEdit,null)>-1:(_vm.options.showEdit)},on:{"change":function($event){var $$a=_vm.options.showEdit,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=null,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.options.showEdit=$$a.concat([$$v]))}else{$$i>-1&&(_vm.options.showEdit=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}}else{_vm.$set(_vm.options, "showEdit", $$c)}}}}),_vm._v(" 显示编辑按钮\n                        ")])]),_vm._v(" "),_c('div',{staticClass:"checkbox"},[_c('label',[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.options.showDelete),expression:"options.showDelete"}],attrs:{"type":"checkbox"},domProps:{"checked":Array.isArray(_vm.options.showDelete)?_vm._i(_vm.options.showDelete,null)>-1:(_vm.options.showDelete)},on:{"change":function($event){var $$a=_vm.options.showDelete,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=null,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.options.showDelete=$$a.concat([$$v]))}else{$$i>-1&&(_vm.options.showDelete=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}}else{_vm.$set(_vm.options, "showDelete", $$c)}}}}),_vm._v(" 显示删除按钮\n                        ")])])]),_vm._v(" "),_c('div',{staticClass:"form-group"},[_c('label',[_vm._v("初始展开层级")]),_vm._v(" "),_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.options.depthOpen),expression:"options.depthOpen"}],staticClass:"form-control",attrs:{"type":"number"},domProps:{"value":(_vm.options.depthOpen)},on:{"input":function($event){if($event.target.composing){ return; }_vm.$set(_vm.options, "depthOpen", $event.target.value)}}})]),_vm._v(" "),_c('h3',[_vm._v("Events")]),_vm._v(" "),_c('p',[_vm._v("点击增删改按钮试一下")]),_vm._v(" "),_vm._l((_vm.message),function(item){return _c('p',[_c('mark',[_vm._v(_vm._s(item))])])}),_vm._v(" "),_c('h3',[_vm._v("Checked ids")]),_vm._v(" "),_c('p',[_vm._v(_vm._s(_vm.ids))]),_vm._v(" "),_c('h3',[_vm._v("Options")]),_vm._v(" "),_c('p',[_vm._v(_vm._s(_vm.options))])],2)])])])}
-var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"col-md-12 text-center"},[_c('img',{attrs:{"src":__webpack_require__("7Otq")}}),_vm._v(" "),_c('p',{staticClass:"lead"},[_vm._v("vue-tree 示例 "),_c('a',{attrs:{"href":"https://github.com/jiaxincui/vue-tree"}},[_vm._v("github")])])])}]
-var esExports = { render: render, staticRenderFns: staticRenderFns }
-/* harmony default export */ __webpack_exports__["a"] = (esExports);
-
-/***/ }),
-
 /***/ "y+y0":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_13_4_0_vue_loader_lib_selector_type_script_index_0_VueTree_vue__ = __webpack_require__("9n5P");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_13_4_0_vue_loader_lib_template_compiler_index_id_data_v_a3f1c2dc_hasScoped_false_transformToRequire_video_src_source_src_img_src_image_xlink_href_buble_transforms_node_modules_vue_loader_13_4_0_vue_loader_lib_selector_type_template_index_0_VueTree_vue__ = __webpack_require__("1wXK");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_13_4_0_vue_loader_lib_template_compiler_index_id_data_v_07c45f3b_hasScoped_false_transformToRequire_video_src_source_src_img_src_image_xlink_href_buble_transforms_node_modules_vue_loader_13_4_0_vue_loader_lib_selector_type_template_index_0_VueTree_vue__ = __webpack_require__("CgpY");
 var normalizeComponent = __webpack_require__("0HdQ")
 /* script */
 
@@ -799,7 +805,7 @@ var __vue_scopeId__ = null
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_13_4_0_vue_loader_lib_selector_type_script_index_0_VueTree_vue__["a" /* default */],
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_13_4_0_vue_loader_lib_template_compiler_index_id_data_v_a3f1c2dc_hasScoped_false_transformToRequire_video_src_source_src_img_src_image_xlink_href_buble_transforms_node_modules_vue_loader_13_4_0_vue_loader_lib_selector_type_template_index_0_VueTree_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_13_4_0_vue_loader_lib_template_compiler_index_id_data_v_07c45f3b_hasScoped_false_transformToRequire_video_src_source_src_img_src_image_xlink_href_buble_transforms_node_modules_vue_loader_13_4_0_vue_loader_lib_selector_type_template_index_0_VueTree_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
