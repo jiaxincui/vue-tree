@@ -100,8 +100,14 @@
 
         watch: {
             options: {
-                handler: function (val, oldVal) {
+                handler: function (val) {
                     this.initOptions()
+                },
+                deep: true
+            },
+            ids: {
+                handler: function (val) {
+                    this.idsWithParent = val.slice(0)
                 },
                 deep: true
             }

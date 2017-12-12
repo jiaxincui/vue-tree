@@ -205,6 +205,14 @@ export default {
             this.message.push('点击了删除按钮，节点ID[' + id + ']')
         }
     },
+    mounted() {
+        let t
+        clearTimeout(t);
+        t = setTimeout(() => {
+            this.ids.push(71)
+        }, 2000);
+
+    }
 //    components: {'vue-tree': VueTree}
 }
 </script>
