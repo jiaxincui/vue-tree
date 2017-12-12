@@ -96,6 +96,9 @@
             if (this.options.checkbox) {
                 this.idsChange(this.idsWithParent)
             }
+            if (this.isFolder && this.depth < this.options.depthOpen) {
+                this.open = true
+            }
         },
 
         computed: {
