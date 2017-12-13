@@ -1,25 +1,25 @@
 .vue-tree {
     list-style-type: none
 }
-.vue-tree-list {
+.vue-tree .vue-tree-list {
     list-style-type: none;
     padding-left: 20px
 }
-.vue-tree-item {
+.vue-tree .vue-tree-item {
     cursor: pointer;
     padding: 5px
 }
-.item-wrapper:hover .item-btn {
+.vue-tree .item-wrapper:hover .item-btn {
     display: inline
 }
-.item-btn {
+.vue-tree .item-btn {
     display: none;
     padding-left: 20px
 }
-.item-bold {
+.vue-tree .item-bold {
     font-weight: bold
 }
-.item-toggle {
+.vue-tree .item-toggle {
     display: inline-block;
     width: 16px;
     height: 100%;
