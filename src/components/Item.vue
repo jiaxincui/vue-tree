@@ -8,8 +8,8 @@
             </span>
             <span class="item-toggle" v-else> </span>
             <span class="item-checkbox" v-if="options.checkbox">
-                <input type="checkbox" :value="model.id" v-model="checked" @change="change" ref="checkbox">
-                <label class="item-label"><span :class="[labelChecked]"></span></label>
+                <input type="checkbox" :value="model.id" ref="checkbox">
+                <label class="item-label" @click="toggleChecked"><span :class="[labelChecked]"></span></label>
             </span>
             <span :class="isBold"
                   @click="itemClick">{{model[options.itemName]}}
@@ -36,9 +36,8 @@
                        :ids="ids"
                        :depth="depth + 1"
                        :ids-with-parent="idsWithParent"
-                       @child-checked="childChecked"
-                       @half-checked="setHalfChecked"
-                       @delete-half-checked="deleteHalfChecked"
+                       :halfIds="halfIds"
+                       @child-change="childChange"
                        @add-a-child="emitAddChild"
                        @item-click="emitItemClick"
                        @item-edit="emitItemEdit"
@@ -84,6 +83,13 @@
                 default: function () {
                     return []
                 }
+            },
+
+            halfIds: {
+                type: Array,
+                default: function () {
+                    return []
+                }
             }
         },
 
@@ -99,6 +105,7 @@
             if (this.options.checkbox) {
                 this.idsChange(this.idsWithParent)
             }
+
             if (this.isFolder && this.depth < this.options.depthOpen) {
                 this.open = true
             }
@@ -106,10 +113,10 @@
 
         computed: {
             labelChecked() {
-                if (this.selfHalfChecked) {
-                    return this.options.halfCheckedClass
-                } else if (this.checked) {
+                if (this.checked) {
                     return this.options.checkedClass
+                } else if (this.selfHalfChecked) {
+                    return this.options.halfCheckedClass
                 } else {
                     return this.options.unCheckedClass
                 }
@@ -120,40 +127,7 @@
             },
 
             selfHalfChecked() {
-                let child = this.model.children;
-                let all = true;
-                let noneChild = true;
-                let none = true;
-                for (let i = 0, l = child.length; i < l; i++) {
-                    if (this.idsWithParent.indexOf(child[i].id) < 0) {
-                        all = false;
-                        break;
-                    }
-                }
-                if (all) {return false}
-                for (let i = 0, l = child.length; i < l; i++) {
-                    if (this.idsWithParent.indexOf(child[i].id) >= 0) {
-                        noneChild = false;
-                        break;
-                    }
-                }
-                if (noneChild) {
-                    let childIds = this.allChildIds(this.model, new Array(0));
-                    let checkedIds = this.idsWithParent;
-                    for (let i = 0, l = checkedIds.length; i < l; i++) {
-                        if (childIds.indexOf(checkedIds[i]) >= 0) {
-                            none = false;
-                            break;
-                        }
-                    }
-                    if (none) {
-                        return false
-                    } else {
-                        return true
-                    }
-                } else {
-                    return true
-                }
+                return this.halfIds.indexOf(this.model.id) >= 0;
             },
 
             isFolder() {
@@ -168,21 +142,24 @@
         },
 
         watch: {
-            idsWithParent: 'idsChange'
+            idsWithParent: 'idsChange',
+            halfIds: 'halfIdsChange'
+
         },
 
         methods: {
+            halfIdsChange(val) {
+
+            },
             toggle() {
                 if (this.isFolder) {
-                    this.open = !this.open
+                    this.open = ! this.open
                 }
             },
 
             changeType() {
-                if (!this.isFolder && this.options.addItem) {
+                if (! this.isFolder && this.options.addItem) {
                     this.emitAddChild(this.model.id)
-                } else {
-                    return
                 }
             },
 
@@ -217,17 +194,20 @@
                 this.$emit('add-a-child', id)
             },
 
-            change(event) {
-                if (event.target.checked) {
+            toggleChecked() {
+                if (this.checked) {
+                    this.delChecked(this.model.id);
+                    this.delId(this.model.id);
+                    this.deleteHalfChecked(this.model.id);
+                    this.allChildDelete(this.model)
+                    this.$emit('child-change')
+                } else {
                     this.addChecked(this.model.id);
                     if (! this.isFolder || this.options.idsWithParent) {
                         this.addId(this.model.id)
                     }
                     this.allChildAdd(this.model)
-                } else {
-                    this.delChecked(this.model.id);
-                    this.delId(this.model.id);
-                    this.allChildDelete(this.model)
+                    // this.$emit('child-change')
                 }
             },
 
@@ -254,89 +234,51 @@
             },
 
             setHalfChecked(id) {
-                this.selfHalfChecked = true;
-                this.$nextTick(function () {
-                    this.$refs.checkbox.indeterminate = true;
-                    this.$emit('half-checked');
-                })
+                if (this.halfIds.indexOf(id) < 0) {
+                    this.$set(this.halfIds, this.halfIds.length, id);
+                    // this.$emit('child-change')
+                }
             },
 
-            deleteHalfChecked() {
-                this.selfHalfChecked = false;
-                this.$nextTick(function () {
-                    this.$refs.checkbox.indeterminate = false;
-                })
+            deleteHalfChecked(id) {
+                let idx = this.halfIds.indexOf(id);
+                if (idx >= 0) {
+                    this.$delete(this.halfIds, idx);
+
+                }
             },
 
-            childChecked(checked) {
-                if (checked) {
-                    this.addChecked(this.model.id);
-                    if (! this.isFolder || this.options.idsWithParent) {
-                        this.addId(this.model.id)
-                    }
-                    let child = this.model.children;
-                    let all = true;
-                    for (let i = 0, l = child.length; i < l; i++) {
-                        if (this.idsWithParent.indexOf(child[i].id) < 0) {
-                            all = false;
-                            break;
-                        }
-                    }
-                    if (all) {
-                        this.deleteHalfChecked();
-
-                    } else {
-                        this.setHalfChecked()
-                    }
-
-                } else {
-                    // let none = true;
-                    // let childIds = this.allChildIds(this.model, new Array(0));
-                    // let checkedIds = this.idsWithParent;
-                    // for (let i = 0, l = checkedIds.length; i < l; i++) {
-                    //     if (childIds.indexOf(checkedIds[i]) >= 0) {
-                    //         none = false;
-                    //         break;
-                    //     }
-                    // }
-                    // if (none) {
-                    //     this.delChecked(this.model.id);
-                    //     this.delId(this.model.id);
-                    //     this.deleteHalfChecked()
-                    // } else {
-                    //     this.setHalfChecked()
-                    // }
-
-
-                    let child = this.model.children;
-                    let noneChild = true;
-                    for (let i = 0, l = child.length; i < l; i++) {
-                        if (this.idsWithParent.indexOf(child[i].id) >= 0) {
-                            noneChild = false;
-                            break;
-                        }
-                    }
-                    if (noneChild) {
-                        let none = true;
-                        let childIds = this.allChildIds(this.model, new Array(0));
-                        let checkedIds = this.idsWithParent;
-                        for (let i = 0, l = checkedIds.length; i < l; i++) {
-                            if (childIds.indexOf(checkedIds[i]) >= 0) {
-                                none = false;
-                                break;
-                            }
-                        }
-                        if (none) {
-                            this.delChecked(this.model.id);
-                            this.delId(this.model.id);
-                            this.deleteHalfChecked()
-                        } else {
-                            this.setHalfChecked()
-                        }
-                    } else {
-                        this.setHalfChecked()
+            childChange() {
+                let children = this.model.children;
+                let allChild = true;
+                let none = true;
+                for (let i = 0, l = children.length; i < l; i++) {
+                    if (this.halfIds.indexOf(children[i].id) >= 0) {
+                        this.setHalfChecked(this.model.id);
+                        break;
                     }
                 }
+                for (let i = 0, l = children.length; i < l; i++) {
+                    if (this.idsWithParent.indexOf(children[i].id) < 0) {
+                        allChild = false;
+                        break;
+                    }
+                }
+                if (allChild) {
+                    this.deleteHalfChecked(this.model.id)
+                } else {
+                    for (let i = 0, l = children.length; i < l; i++) {
+                        if (this.idsWithParent.indexOf(children[i].id) >= 0) {
+                            none = false;
+                        }
+                    }
+                    if (none) {
+                        this.deleteHalfChecked(this.model.id)
+                    } else {
+                        this.setHalfChecked(this.model.id);
+                    }
+                }
+                // this.deleteHalfChecked(this.model.id)
             },
 
             allChildAdd(item) {
@@ -374,18 +316,13 @@
                     this.open = true
                 }
                 if (val.indexOf(this.model.id) >= 0) {
-                    this.checked = true;
                     if (this.options.checkedOpen && this.isFolder) {
                         this.open = true
                     }
                     if (this.isFolder && ! this.options.idsWithParent) {
-                        this.delId(this.model.id)
                     }
-                    this.$emit('child-checked', true);
-                } else {
-                    this.checked = false;
-                    this.$emit('child-checked', false);
                 }
+                this.$emit('child-change')
             }
         }
     }
