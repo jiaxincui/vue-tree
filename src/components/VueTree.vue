@@ -62,6 +62,9 @@
                     deleteClass: 'fa fa-trash-o',
                     openClass: 'fa fa-angle-right',
                     closeClass: 'fa fa-angle-down',
+                    halfCheckedClass: 'fa fa-minus-square-o fa-fw',
+                    checkedClass: 'fa fa-check-square-o fa-fw',
+                    unCheckedClass: 'fa fa-square-o fa-fw'
 
                 },
                 termOptions: {},

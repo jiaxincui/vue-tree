@@ -8,7 +8,8 @@
             </span>
             <span class="item-toggle" v-else> </span>
             <span class="item-checkbox" v-if="options.checkbox">
-                <input type="checkbox" :value="model.id" v-model="checked" @change="change">
+                <input type="checkbox" :value="model.id" v-model="checked" @change="change" ref="checkbox">
+                <label class="item-label"><span :class="[labelChecked]"></span></label>
             </span>
             <span :class="isBold"
                   @click="itemClick">{{model[options.itemName]}}
@@ -36,7 +37,8 @@
                        :depth="depth + 1"
                        :ids-with-parent="idsWithParent"
                        @child-checked="childChecked"
-                       @half-checked="halfChecked"
+                       @half-checked="setHalfChecked"
+                       @delete-half-checked="deleteHalfChecked"
                        @add-a-child="emitAddChild"
                        @item-click="emitItemClick"
                        @item-edit="emitItemEdit"
@@ -88,7 +90,8 @@
         data() {
             return {
                 open: false,
-                checked: false
+                // checked: false,
+                // selfHalfChecked: false
             }
         },
 
@@ -102,6 +105,57 @@
         },
 
         computed: {
+            labelChecked() {
+                if (this.selfHalfChecked) {
+                    return this.options.halfCheckedClass
+                } else if (this.checked) {
+                    return this.options.checkedClass
+                } else {
+                    return this.options.unCheckedClass
+                }
+            },
+
+            checked() {
+                return this.idsWithParent.indexOf(this.model.id) >= 0
+            },
+
+            selfHalfChecked() {
+                let child = this.model.children;
+                let all = true;
+                let noneChild = true;
+                let none = true;
+                for (let i = 0, l = child.length; i < l; i++) {
+                    if (this.idsWithParent.indexOf(child[i].id) < 0) {
+                        all = false;
+                        break;
+                    }
+                }
+                if (all) {return false}
+                for (let i = 0, l = child.length; i < l; i++) {
+                    if (this.idsWithParent.indexOf(child[i].id) >= 0) {
+                        noneChild = false;
+                        break;
+                    }
+                }
+                if (noneChild) {
+                    let childIds = this.allChildIds(this.model, new Array(0));
+                    let checkedIds = this.idsWithParent;
+                    for (let i = 0, l = checkedIds.length; i < l; i++) {
+                        if (childIds.indexOf(checkedIds[i]) >= 0) {
+                            none = false;
+                            break;
+                        }
+                    }
+                    if (none) {
+                        return false
+                    } else {
+                        return true
+                    }
+                } else {
+                    return true
+                }
+            },
+
             isFolder() {
                 return this.model.children && this.model.children.length
             },
@@ -172,7 +226,7 @@
                     this.allChildAdd(this.model)
                 } else {
                     this.delChecked(this.model.id);
-                    this.delId(this.model.id)
+                    this.delId(this.model.id);
                     this.allChildDelete(this.model)
                 }
             },
@@ -200,27 +254,17 @@
             },
 
             setHalfChecked(id) {
+                this.selfHalfChecked = true;
                 this.$nextTick(function () {
-                    let inputs = document.getElementsByTagName('input');
-                    for (let i = 0, len = inputs.length; i < len; i++) {
-                        if (parseInt(inputs[i].value, 10) === id) {
-                            inputs[i].indeterminate = true;
-                            this.$emit('half-checked')
-                        }
-                    }
+                    this.$refs.checkbox.indeterminate = true;
+                    this.$emit('half-checked');
                 })
             },
 
-            halfChecked() {
-                this.setHalfChecked(this.model.id)
-            },
-
-            deleteHalfChecked(id) {
+            deleteHalfChecked() {
+                this.selfHalfChecked = false;
                 this.$nextTick(function () {
-                    let inputs = document.getElementsByTagName('input');
-                    for (let i = 0, len = inputs.length; i < len; i++) {
-                        if (parseInt(inputs[i].value, 10) === id) inputs[i].indeterminate = false
-                    }
+                    this.$refs.checkbox.indeterminate = false;
                 })
             },
 
@@ -232,50 +276,72 @@
                     }
                     let child = this.model.children;
                     let all = true;
-                    for (let i = 0, len = child.length; i < len; i++) {
+                    for (let i = 0, l = child.length; i < l; i++) {
                         if (this.idsWithParent.indexOf(child[i].id) < 0) {
                             all = false;
                             break;
                         }
                     }
                     if (all) {
-                        this.deleteHalfChecked(this.model.id);
+                        this.deleteHalfChecked();
+
                     } else {
-                        this.setHalfChecked(this.model.id)
+                        this.setHalfChecked()
                     }
+
                 } else {
+                    // let none = true;
+                    // let childIds = this.allChildIds(this.model, new Array(0));
+                    // let checkedIds = this.idsWithParent;
+                    // for (let i = 0, l = checkedIds.length; i < l; i++) {
+                    //     if (childIds.indexOf(checkedIds[i]) >= 0) {
+                    //         none = false;
+                    //         break;
+                    //     }
+                    // }
+                    // if (none) {
+                    //     this.delChecked(this.model.id);
+                    //     this.delId(this.model.id);
+                    //     this.deleteHalfChecked()
+                    // } else {
+                    //     this.setHalfChecked()
+                    // }
+
+
                     let child = this.model.children;
-                    let none = true;
-                    for (let i = 0, len = child.length; i < len; i++) {
+                    let noneChild = true;
+                    for (let i = 0, l = child.length; i < l; i++) {
                         if (this.idsWithParent.indexOf(child[i].id) >= 0) {
-                            none = false;
+                            noneChild = false;
                             break;
                         }
                     }
-                    if (none) {
-                        let noneChild = true;
+                    if (noneChild) {
+                        let none = true;
                         let childIds = this.allChildIds(this.model, new Array(0));
                         let checkedIds = this.idsWithParent;
-                        for (let i = 0, len = checkedIds.length; i < len; i++) {
+                        for (let i = 0, l = checkedIds.length; i < l; i++) {
                             if (childIds.indexOf(checkedIds[i]) >= 0) {
-                                noneChild = false;
+                                none = false;
                                 break;
                             }
                         }
-                        if (noneChild) {
+                        if (none) {
                             this.delChecked(this.model.id);
                             this.delId(this.model.id);
-                            this.deleteHalfChecked(this.model.id)
+                            this.deleteHalfChecked()
+                        } else {
+                            this.setHalfChecked()
                         }
                     } else {
-                        this.setHalfChecked(this.model.id)
+                        this.setHalfChecked()
                     }
                 }
             },
 
             allChildAdd(item) {
                 if (item.children && item.children.length) {
-                    for (let i = 0, len = item.children.length; i < len; i++) {
+                    for (let i = 0, l = item.children.length; i < l; i++) {
                         this.addChecked(item.children[i].id);
                         if (! (item.children[i].children && item.children[i].children.length) || this.options.idsWithParent) {
                             this.addId(item.children[i].id)
@@ -286,18 +352,16 @@
             },
 
             allChildDelete(item) {
-                if (item.children && item.children.length) {
-                    for (let i = 0, len = item.children.length; i < len; i++) {
-                        this.delChecked(item.children[i].id);
-                        this.delId(item.children[i].id);
-                        this.allChildDelete(item.children[i]);
-                    }
+                let childIds = this.allChildIds(item, new Array(0));
+                for (let i = 0, l = childIds.length; i < l; i++) {
+                    this.delChecked(childIds[i]);
+                    this.delId(childIds[i]);
                 }
             },
 
             allChildIds(item, res) {
                 if (item.children && item.children.length) {
-                    for (let i = 0, len = item.children.length; i < len; i++) {
+                    for (let i = 0, l = item.children.length; i < l; i++) {
                         res.push(item.children[i].id);
                         this.allChildIds(item.children[i], res);
                     }
