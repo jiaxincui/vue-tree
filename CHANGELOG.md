@@ -1,5 +1,19 @@
 # Release Notes
 
+## v2.2.0
+
+(2017-12-16)
+
+优化核心计算方法，添加 `label` 可控制选择框样式
+### Added
+
+- 新增 `halfCheckedClass` 、 `checkedClass`、 `unCheckedClass` 选项，可定制选择框样式
+
+### Changed
+
+- 样式调整，优化显示
+---
+
 ## v2.1.1
 
 (2017-11-23)
