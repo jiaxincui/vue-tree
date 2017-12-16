@@ -78,7 +78,7 @@ export default {
     name: 'app',
     data () {
         return {
-            ids: [],
+            ids: [62],
 
             options: {
                 itemName: 'name',
@@ -93,8 +93,11 @@ export default {
                 deleteClass: 'fa fa-trash-o',
                 openClass: 'fa fa-angle-right',
                 closeClass: 'fa fa-angle-down',
-                idsWithParent: true,
-                depthOpen: 0
+                idsWithParent: false,
+                depthOpen: 0,
+                halfCheckedClass: 'fa fa-minus-square-o fa-fw text-primary',
+                checkedClass: 'fa fa-check-square-o fa-fw text-danger',
+                unCheckedClass: 'fa fa-square-o fa-fw'
             },
 
             treeData:[{
@@ -188,6 +191,11 @@ export default {
             message: []
         }
     },
+
+    created() {
+        let t
+    },
+
     methods: {
         addAChild(id) {
             this.message.push('点击了添加子节点按钮，父节点ID[' + id + ']')
