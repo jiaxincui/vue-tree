@@ -8,10 +8,12 @@
             </span>
             <span class="item-toggle" v-else> </span>
             <span class="item-checkbox" v-if="options.checkbox">
-                <input type="checkbox" :value="model.id" ref="checkbox">
-                <label class="item-label" @click="toggleChecked"><span :class="[labelChecked]"></span></label>
+                <input type="checkbox" :checked="ids.indexOf(model.id) >= 0" v-show="false">
+                <label class="item-label" @click="toggleChecked">
+                    <span :class="[labelIcon, labelStatus]"></span>
+                </label>
             </span>
-            <span :class="isBold"
+            <span class="item-name" :class="isBold"
                   @click="itemClick">{{model[options.itemName]}}
             </span>
             <span class="item-btn">
@@ -96,8 +98,6 @@
         data() {
             return {
                 open: false,
-                // checked: false,
-                // selfHalfChecked: false
             }
         },
 
@@ -112,13 +112,23 @@
         },
 
         computed: {
-            labelChecked() {
+            labelIcon() {
                 if (this.half.indexOf(this.model.id) >= 0) {
                     return this.options.halfCheckedClass
                 } else if (this.idsWithParent.indexOf(this.model.id) >= 0) {
                     return this.options.checkedClass
                 } else {
                     return this.options.unCheckedClass
+                }
+            },
+
+            labelStatus() {
+                if (this.half.indexOf(this.model.id) >= 0) {
+                    return 'half-checked'
+                } else if (this.idsWithParent.indexOf(this.model.id) >= 0) {
+                    return 'checked'
+                } else {
+                    return 'un-checked'
                 }
             },
 
@@ -152,12 +162,6 @@
                 }
             },
 
-            changeType() {
-                if (! this.isFolder && this.options.addItem) {
-                    this.emitAddChild(this.model.id)
-                }
-            },
-
             itemClick() {
                 this.emitItemClick(this.model.id)
             },
@@ -165,6 +169,7 @@
             addChild() {
                 this.emitAddChild(this.model.id)
             },
+
             itemEdit() {
                 this.emitItemEdit(this.model.id)
             },
@@ -190,23 +195,25 @@
             },
 
             toggleChecked() {
+                if (this.isFolder) {
+                    this.deleteHalfChecked(this.model.id);
+                }
                 if (this.checked) {
                     this.delChecked(this.model.id);
                     this.delId(this.model.id);
-                    this.allChildDelete(this.model)
+                    this.allChildDelete(this.model);
+                    this.$emit('child-change', false);
                 } else {
                     this.addChecked(this.model.id);
                     if (! this.isFolder || this.options.idsWithParent) {
                         this.addId(this.model.id)
                     }
                     this.allChildAdd(this.model);
+                    this.$emit('child-change', true);
+                    if (this.options.checkedOpen && this.isFolder) {
+                        this.open = true
+                    }
                 }
-                if (this.isFolder) {
-                    this.deleteHalfChecked(this.model.id);
-                }
-                console.log(this.idsWithParent)
-                this.$emit('child-change')
-
             },
 
             addId(id) {
@@ -241,49 +248,58 @@
                 let idx = this.half.indexOf(id);
                 if (idx >= 0) {
                     this.$delete(this.half, idx);
-
                 }
             },
 
             childChange(checked) {
-                if (checked) {
-
-                } else {
-
-                }
-
-
                 let children = this.model.children;
-                let allChild = true;
-                let none = true;
                 for (let i = 0, l = children.length; i < l; i++) {
-                    if (this.idsWithParent.indexOf(children[i].id) < 0) {
-                        allChild = false;
-                        break;
+                    if (this.half.indexOf(children[i].id) >= 0) {
+                        this.addChecked(this.model.id);
+                        if (this.options.idsWithParent) {
+                            this.addId(this.model.id)
+                        }
+                        this.setHalfChecked(this.model.id);
+                        return;
                     }
                 }
-                if (allChild) {
-                    this.deleteHalfChecked(this.model.id);
-                } else {
+                if (checked) {
+                    this.addChecked(this.model.id);
+                    if (this.options.idsWithParent) {
+                        this.addId(this.model.id)
+                    }
+                    let children = this.model.children;
+                    let allChecked = true;
                     for (let i = 0, l = children.length; i < l; i++) {
-                        if (this.idsWithParent.indexOf(children[i].id) >= 0) {
-                            none = false;
+                        if (this.idsWithParent.indexOf(children[i].id) < 0) {
+                            allChecked = false;
                             break;
                         }
                     }
-                    if (none) {
-                        console.log('none' + this.model.id)
-                        this.delChecked(this.model.id)
-                        this.deleteHalfChecked(this.model.id)
+                    if (allChecked) {
+                        this.deleteHalfChecked(this.model.id);
                     } else {
-                        // console.log(this.model.id)
-                        this.addChecked(this.model.id)
                         this.setHalfChecked(this.model.id);
-
                     }
+                    this.$emit('child-change', true)
+                } else {
+                    let children = this.model.children;
+                    let nonChecked = true;
+                    for (let i = 0, l = children.length; i < l; i++) {
+                        if (this.idsWithParent.indexOf(children[i].id) >= 0) {
+                            nonChecked = false;
+                            break;
+                        }
+                    }
+                    if (nonChecked) {
+                        this.deleteHalfChecked(this.model.id);
+                        this.delChecked(this.model.id);
+                        this.delId(this.model.id)
+                    } else {
+                        this.setHalfChecked(this.model.id);
+                    }
+                    this.$emit('child-change', false)
                 }
-                this.$emit('child-change')
-                // this.deleteHalfChecked(this.model.id)
             },
 
             allChildAdd(item) {
@@ -323,12 +339,10 @@
                     this.open = true
                 }
                 if (val.indexOf(this.model.id) >= 0) {
-                    if (this.options.checkedOpen && this.isFolder) {
-                        this.open = true
-                    }
                     if (this.isFolder && ! this.options.idsWithParent) {
                         this.delId(val.id)
                     }
+                    this.$emit('child-change', true)
                 }
             }
         }
