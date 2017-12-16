@@ -36,7 +36,7 @@
                        :ids="ids"
                        :depth="depth + 1"
                        :ids-with-parent="idsWithParent"
-                       :halfIds="halfIds"
+                       :half="half"
                        @child-change="childChange"
                        @add-a-child="emitAddChild"
                        @item-click="emitItemClick"
@@ -85,7 +85,7 @@
                 }
             },
 
-            halfIds: {
+            half: {
                 type: Array,
                 default: function () {
                     return []
@@ -113,10 +113,10 @@
 
         computed: {
             labelChecked() {
-                if (this.checked) {
-                    return this.options.checkedClass
-                } else if (this.selfHalfChecked) {
+                if (this.half.indexOf(this.model.id) >= 0) {
                     return this.options.halfCheckedClass
+                } else if (this.idsWithParent.indexOf(this.model.id) >= 0) {
+                    return this.options.checkedClass
                 } else {
                     return this.options.unCheckedClass
                 }
@@ -126,8 +126,8 @@
                 return this.idsWithParent.indexOf(this.model.id) >= 0
             },
 
-            selfHalfChecked() {
-                return this.halfIds.indexOf(this.model.id) >= 0;
+            halfChecked() {
+                return this.half.indexOf(this.model.id) >= 0;
             },
 
             isFolder() {
@@ -143,14 +143,9 @@
 
         watch: {
             idsWithParent: 'idsChange',
-            halfIds: 'halfIdsChange'
-
         },
 
         methods: {
-            halfIdsChange(val) {
-
-            },
             toggle() {
                 if (this.isFolder) {
                     this.open = ! this.open
@@ -198,17 +193,20 @@
                 if (this.checked) {
                     this.delChecked(this.model.id);
                     this.delId(this.model.id);
-                    this.deleteHalfChecked(this.model.id);
                     this.allChildDelete(this.model)
-                    this.$emit('child-change')
                 } else {
                     this.addChecked(this.model.id);
                     if (! this.isFolder || this.options.idsWithParent) {
                         this.addId(this.model.id)
                     }
-                    this.allChildAdd(this.model)
-                    // this.$emit('child-change')
+                    this.allChildAdd(this.model);
                 }
+                if (this.isFolder) {
+                    this.deleteHalfChecked(this.model.id);
+                }
+                console.log(this.idsWithParent)
+                this.$emit('child-change')
+
             },
 
             addId(id) {
@@ -234,30 +232,30 @@
             },
 
             setHalfChecked(id) {
-                if (this.halfIds.indexOf(id) < 0) {
-                    this.$set(this.halfIds, this.halfIds.length, id);
-                    // this.$emit('child-change')
+                if (this.half.indexOf(id) < 0) {
+                    this.$set(this.half, this.half.length, id);
                 }
             },
 
             deleteHalfChecked(id) {
-                let idx = this.halfIds.indexOf(id);
+                let idx = this.half.indexOf(id);
                 if (idx >= 0) {
-                    this.$delete(this.halfIds, idx);
+                    this.$delete(this.half, idx);
 
                 }
             },
 
-            childChange() {
+            childChange(checked) {
+                if (checked) {
+
+                } else {
+
+                }
+
+
                 let children = this.model.children;
                 let allChild = true;
                 let none = true;
-                for (let i = 0, l = children.length; i < l; i++) {
-                    if (this.halfIds.indexOf(children[i].id) >= 0) {
-                        this.setHalfChecked(this.model.id);
-                        break;
-                    }
-                }
                 for (let i = 0, l = children.length; i < l; i++) {
                     if (this.idsWithParent.indexOf(children[i].id) < 0) {
                         allChild = false;
@@ -265,19 +263,26 @@
                     }
                 }
                 if (allChild) {
-                    this.deleteHalfChecked(this.model.id)
+                    this.deleteHalfChecked(this.model.id);
                 } else {
                     for (let i = 0, l = children.length; i < l; i++) {
                         if (this.idsWithParent.indexOf(children[i].id) >= 0) {
                             none = false;
+                            break;
                         }
                     }
                     if (none) {
+                        console.log('none' + this.model.id)
+                        this.delChecked(this.model.id)
                         this.deleteHalfChecked(this.model.id)
                     } else {
+                        // console.log(this.model.id)
+                        this.addChecked(this.model.id)
                         this.setHalfChecked(this.model.id);
+
                     }
                 }
+                this.$emit('child-change')
                 // this.deleteHalfChecked(this.model.id)
             },
 
@@ -294,10 +299,12 @@
             },
 
             allChildDelete(item) {
-                let childIds = this.allChildIds(item, new Array(0));
-                for (let i = 0, l = childIds.length; i < l; i++) {
-                    this.delChecked(childIds[i]);
-                    this.delId(childIds[i]);
+                if (item.children && item.children.length) {
+                    let childIds = this.allChildIds(item, new Array(0));
+                    for (let i = 0, l = childIds.length; i < l; i++) {
+                        this.delChecked(childIds[i]);
+                        this.delId(childIds[i]);
+                    }
                 }
             },
 
@@ -320,9 +327,9 @@
                         this.open = true
                     }
                     if (this.isFolder && ! this.options.idsWithParent) {
+                        this.delId(val.id)
                     }
                 }
-                this.$emit('child-change')
             }
         }
     }
