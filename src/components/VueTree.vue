@@ -91,11 +91,7 @@
             },
             initOptions () {
                 this.termOptions = Object.assign({}, this.defaultOptions, this.options);
-                if (this.termOptions.checkedIds && this.termOptions.checkedIds.length) {
-                    this.idsWithParent = this.termOptions.checkedIds.slice(0)
-                } else {
-                    this.idsWithParent = this.ids.slice(0)
-                }
+                this.idsWithParent = this.ids.slice(0)
             }
         },
 
