@@ -6,23 +6,32 @@
     padding-left: 20px
 }
 .vue-tree .vue-tree-item {
+    /*padding: 5px;*/
     cursor: pointer;
-    padding: 5px
 }
-.vue-tree .item-wrapper:hover .item-btn {
-    display: inline
+
+.vue-tree .item-wrapper {
+    padding: 5px 0;
+    height: 100%;
+    line-height: 100%;
 }
+
 .vue-tree .item-btn {
     display: none;
     padding-left: 20px
 }
+
+.vue-tree .item-wrapper:hover .item-btn {
+    display: inline
+}
+
 .vue-tree .item-bold {
     font-weight: bold
 }
+
 .vue-tree .item-toggle {
     display: inline-block;
-    width: 16px;
-    height: 100%;
-    line-height: 100%;
+    width: 20px;
+    text-align: center;
     overflow: hidden
 }
