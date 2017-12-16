@@ -201,11 +201,20 @@ options: {
     // String,删除按钮(默认依赖font-awesome)
     deleteClass: 'fa fa-trash-o'
     
-    // (v2.1新增) Boolean,获取复选项目是否包含目录,默认`true`,如果只获取叶子节点设置为`false`
+    // Boolean,获取复选项目是否包含目录,默认`true`,如果只获取叶子节点设置为`false`
     idsWithParent: true
     
-    // (v2.1新增) Number,初始化时展开层级,根节点为0,默认0
+    // Number,初始化时展开层级,根节点为0,默认0
     depthOpen: 0
+    
+    // (v2.2新增), 选择框选中样式
+    checkedClass: 'fa fa-check-square-o fa-fw'
+    
+    // (v2.2新增), 选择框半选中样式
+    halfCheckedClass: 'fa fa-minus-square-o fa-fw'
+    
+    // (v2.2新增), 选择框未选中样式
+    CheckedClass: 'fa fa-square-o fa-fw'
 }
 ```
 > 注意：默认设置使用了`font-awesome`的图标，
@@ -278,7 +287,13 @@ methods: {
 
 `.vue-tree .item-wrapper .item-btn .delete-btn`
 
-`.vue-tree-list`
+`.veu-tree .vue-tree-list`
+
+`.vue-tree .item-label .checked`
+
+`.vue-tree .item-label .un-checked`
+
+`.vue-tree .item-label .half-checked`
 
 ## License
 
