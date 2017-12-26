@@ -1,37 +1,31 @@
 .vue-tree {
-    list-style-type: none
+  list-style-type: none
 }
 .vue-tree .vue-tree-list {
-    list-style-type: none;
-    padding-left: 20px
+  list-style-type: none;
+  padding-left: 20px
 }
 .vue-tree .vue-tree-item {
-    /*padding: 5px;*/
-    cursor: pointer;
+  cursor: pointer;
 }
-
 .vue-tree .item-wrapper {
-    padding: 5px 0;
-    height: 100%;
-    line-height: 100%;
+  padding: 5px 0;
+  height: 100%;
+  line-height: 100%;
 }
-
 .vue-tree .item-btn {
-    display: none;
-    padding-left: 20px
+  display: none;
+  padding-left: 20px
 }
-
 .vue-tree .item-wrapper:hover .item-btn {
-    display: inline
+  display: inline
 }
-
 .vue-tree .item-bold {
-    font-weight: bold
+  font-weight: bold
 }
-
 .vue-tree .item-toggle {
-    display: inline-block;
-    width: 20px;
-    text-align: center;
-    overflow: hidden
+  display: inline-block;
+  width: 20px;
+  text-align: center;
+  overflow: hidden
 }
