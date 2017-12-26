@@ -102,6 +102,8 @@
           unCheckedClass: 'fa fa-square-o fa-fw'
         },
 
+        message: [],
+
         treeData: [{
           name: '根目录[1]',
           id: 1,
@@ -194,8 +196,7 @@
               ]
             }
           ]
-        }],
-        message: []
+        }]
       }
     },
 
@@ -216,9 +217,5 @@
         this.message.push(`触发删除按钮事件，当前节点${JSON.stringify(item)}`)
       }
     }
-  //    components: {'vue-tree': VueTree}
   }
 </script>
-
-<style>
-</style>
