@@ -74,8 +74,6 @@
 </template>
 
 <script>
-  import 'font-awesome/css/font-awesome.min.css'
-  import 'bootstrap/dist/css/bootstrap.min.css'
   export default {
     name: 'app',
     data: function () {
