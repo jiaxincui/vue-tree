@@ -88,26 +88,27 @@ treeData示例
       ```vue
       <template>
         <div id="app">
-            <vue-tree v-model="checkedIds" :tree-data="treeData" :options="options"></vue-tree>
+          <vue-tree v-model="checkedIds" :tree-data="treeData" :options="options"></vue-tree>
         </div>
       </template>
       
       <script>
       import VueTree from 'vue-simple-tree/src/components/VueTree.vue'
-      import Tree from 'tree.json';
+      import Tree from 'tree.json'
+   
       export default {
-          name: 'app',
-          components: { VueTree },
-          data () {
-              return {
-                  // 复选ids,可传入id数组作为初始选中状态,如[3,4,8]
-                  checkedIds: [],
-                  // tree数据
-                  treeData: Tree.data,
-                  // 设置项
-                  options: {}
-              }
+        name: 'app',
+        components: { VueTree },
+        data () {
+          return {
+            // 复选ids,可传入id数组作为初始选中状态,如[3,4,8]
+            checkedIds: [],
+            // tree数据
+            treeData: Tree.data,
+            // 设置项
+            options: {}
           }
+        }
       }
       </script>
       ```
@@ -119,7 +120,7 @@ treeData示例
     import App from './App'
     import Vuetree from 'vue-simple-tree'
     
-    Vue.use(Vuetree);
+    Vue.use(Vuetree)
     
     new Vue({
       el: '#app',
@@ -133,21 +134,21 @@ treeData示例
     ```vue
     <template>
       <div id="app">
-          <vue-tree v-model="checkedIds" :tree-data="treeData" :options="options"></vue-tree>
+        <vue-tree v-model="checkedIds" :tree-data="treeData" :options="options"></vue-tree>
       </div>
     </template>
-    
+
     <script>
     import Tree from 'tree.json';
     export default {
-        name: 'app',
-        data () {
-            return {
-                checkedIds: [],
-                treeData: Tree.data,
-                options: {}
-            }
+      name: 'app',
+      data () {
+        return {
+          checkedIds: [],
+          treeData: Tree.data,
+          options: {}
         }
+      }
     }
     </script>
     ```
@@ -239,32 +240,33 @@ options: {
 
 ```html
 <vue-tree 
-    v-model="ids"
-    :tree-data="treeData"
-    :options="options"
-    @add-a-child="addAChild"
-    @item-click="itemClick"
-    @item-edit="itemEdit"
-    @item-delete="itemDelete">
-</vue-tree>
+  v-model="ids"
+  :tree-data="treeData"
+  :options="options"
+  @add-a-child="addAChild"
+  @item-click="itemClick"
+  @item-edit="itemEdit"
+  @item-delete="itemDelete"
+/>
+
 ```
 
-为绑定的事件定义监听方法，这些方法都接收一个当前操作id作为参数
+为绑定的事件定义监听方法，~~这些方法都接收一个当前操作id作为参数~~,（v2.2.3）当前操作 `id` 作为监听方法的第一个参数，当前 `model`作为第二个参数
 
 ```
 methods: {
-    addAChild(id) {
-        console.log('点击了添加子节点按钮，父节点ID[' + id + ']')
-    },
-    itemClick(id) {
-        console.log('点击了节点，节点ID[' + id + ']')
-    },
-    itemEdit(id) {
-        console.log('点击了编辑按钮，节点ID[' + id + ']')
-        },
-    itemDelete(id) {
-        console.log('点击了删除按钮，节点ID[' + id + ']')
-    }
+  addAChild (id, item) {
+    this.message.push(`触发添加子节点事件，当前节点${JSON.stringify(item)}`)
+  },
+  itemClick (id, item) {
+    this.message.push(`触发点击事件，当前节点${JSON.stringify(item)}`)
+  },
+  itemEdit (id, item) {
+    this.message.push(`触发编辑按钮事件，当前节点${JSON.stringify(item)}`)
+  },
+  itemDelete (id, item) {
+    this.message.push(`触发删除按钮事件，当前节点${JSON.stringify(item)}`)
+  }
 }
 ```
 ## 样式

@@ -200,7 +200,7 @@
 
     methods: {
       addAChild (id, item) {
-        this.message.push(`触发添加子节点事件，当前节点${JSON.stringify(item)} `)
+        this.message.push(`触发添加子节点事件，当前节点${JSON.stringify(item)}`)
       },
 
       itemClick (id, item) {
