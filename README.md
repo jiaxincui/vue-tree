@@ -34,7 +34,7 @@ A [Demo](https://jiaxincui.github.io/vue-tree/dist/)
 
 ``` bash
 # install
-npm install vue-simple-tree --sve-dev
+npm install vue-simple-tree --sve
 ```
 
 ## 数据格式
