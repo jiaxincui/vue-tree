@@ -1,17 +1,17 @@
 <template>
   <ul class="vue-tree">
     <tree-item
-      v-for="item in treeData"
+      v-for="(item, idx) in treeData"
       :ids="ids"
       :ids-with-parent="idsWithParent"
       :model="item"
       :options="termOptions"
       :depth="0"
+      :key="idx"
       @add-a-child="addAChild"
       @item-click="itemClick"
       @item-edit="itemEdit"
       @item-delete="itemDelete"
-      :key="item.id"
     />
   </ul>
 </template>

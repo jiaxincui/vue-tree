@@ -52,19 +52,19 @@
     </div>
     <ul v-if="isFolder" v-show="open" class="vue-tree-list">
       <tree-item
-        v-for="item in model.children"
+        v-for="(item, idx) in model.children"
         :model="item"
         :options="options"
         :ids="ids"
         :depth="depth + 1"
         :ids-with-parent="idsWithParent"
         :half="half"
+        :key="idx"
         @child-change="childChange"
         @add-a-child="emitAddChild"
         @item-click="emitItemClick"
         @item-edit="emitItemEdit"
         @item-delete="emitItemDelete"
-        :key="model.id"
       />
     </ul>
   </li>
