@@ -6,43 +6,51 @@
         v-if="isFolder"
         @click="toggle"
       >
-        <i :class="[open ? options.closeClass : options.openClass]"></i>
+        <i
+          :class="[open ? options.closeClass : options.openClass]"
+        />
       </span>
-      <span class="item-toggle" v-else> </span>
+      <span
+        v-else
+        class="item-toggle"
+      />
       <span class="item-checkbox" v-if="options.checkbox">
         <input type="checkbox" :checked="ids.indexOf(model.id) >= 0" v-show="false">
         <label class="item-label" @click="toggleChecked">
           <span :class="[labelIcon, labelStatus]"></span>
         </label>
       </span>
-      <span class="item-name" :class="isBold"
-        @click="itemClick">{{ model[options.itemName] }}
+      <span
+        class="item-name"
+        :class="isBold"
+        @click="itemClick"
+      >
+        {{ model[options.itemName] }}
       </span>
       <span class="item-btn">
         <i
-          class="add-btn"
           v-if="options.showAdd"
-          @click="addChild"
+          class="add-btn"
           :class="[options.addClass]"
-        >
-        </i>&nbsp;
+          @click="addChild"
+        />
+        &nbsp;
         <i
-          class="edit-btn"
           v-if="options.showEdit"
-          @click="itemEdit"
+          class="edit-btn"
           :class="[options.editClass]"
-        >
-        </i>&nbsp;
+          @click="itemEdit"
+        />
+        &nbsp;
         <i
-          class="delete-btn"
           v-if="options.showDelete"
-          @click="itemDelete"
+          class="delete-btn"
           :class="[options.deleteClass]"
-        >
-        </i>
+          @click="itemDelete"
+        />
       </span>
     </div>
-    <ul class="vue-tree-list" v-show="open" v-if="isFolder">
+    <ul v-if="isFolder" v-show="open" class="vue-tree-list">
       <tree-item
         v-for="item in model.children"
         :model="item"
