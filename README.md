@@ -2,7 +2,7 @@
 
 > A simple tree component for vue.js
 
-**v2.2.0优化核心计算方法，添加 `label` 可控制选择框样式**
+**v2.2.0优化核心计算方法，添加 `label` 可定制选择框样式**
 
 ## 介绍
 
@@ -41,16 +41,17 @@ npm install vue-simple-tree --sve-dev
 
 `treeData`
 
-> `id`必要属性,`Number`
+- `id` 必要属性，类型 `Number`
 
-> `name`必要属性,`String`,可自定义,默认`name`,如`options.itemName:'display_name'`
+- `name` 必要属性，类型 `String`，可自定义，默认 `name`，如： `options.itemName:'label'`
 
-> `children`非必要,`Array`
+- `children` 非必要，类型 `Array`
 
-treeData示例
+### treeData示例
+./tree.json
 ```json
 {
-"data": [{
+  "data": [{
     "id": "1",
     "name": "Root",
     "children": [
@@ -81,20 +82,24 @@ treeData示例
 
    有两种使用方法:
 
-1. 局部注册component(推荐)
+1. 局部注册
     
     `App.vue`
   
       ```vue
       <template>
         <div id="app">
-          <vue-tree v-model="checkedIds" :tree-data="treeData" :options="options"></vue-tree>
+          <vue-tree
+            v-model="checkedIds"
+            :tree-data="treeData"
+            :options="options"
+          />
         </div>
       </template>
       
       <script>
       import VueTree from 'vue-simple-tree/src/components/VueTree.vue'
-      import Tree from 'tree.json'
+      import Tree from './tree.json'
    
       export default {
         name: 'app',
@@ -112,7 +117,7 @@ treeData示例
       }
       </script>
       ```
-2. 全局注册，通过插件形式注册全局component
+2. 通过插件形式全局注册
     
     `main.js`
 
@@ -134,12 +139,16 @@ treeData示例
     ```vue
     <template>
       <div id="app">
-        <vue-tree v-model="checkedIds" :tree-data="treeData" :options="options"></vue-tree>
+        <vue-tree
+          v-model="checkedIds"
+          :tree-data="treeData"
+          :options="options"
+        />
       </div>
     </template>
 
     <script>
-    import Tree from 'tree.json';
+    import Tree from './tree.json';
     export default {
       name: 'app',
       data () {
@@ -157,7 +166,7 @@ treeData示例
 
 以下是默认设置.
 
-你可以在`options`里覆盖默认设置，或仅设置若干项`options: {someOption: true}`
+你可以在`options`里覆盖默认设置，或仅设置若干项`options: {someOption: optionValue}`
 
 你也可以绑定一个空的对象`:options="{}"`或直接忽略`options`
 
@@ -171,9 +180,6 @@ options: {
     
     // Boolean,是否显示选择框
     checkbox: true,
-    
-    // Array,初始化时选中id (v2.1以后不推荐使用，v3.0将废弃),替代方法见'#使用示例'章节
-    checkedIds: [], 
     
     // Boolean,选中时是否展开节点
     checkedOpen: true,
@@ -202,31 +208,30 @@ options: {
     // String,删除按钮(默认依赖font-awesome)
     deleteClass: 'fa fa-trash-o'
     
-    // Boolean,获取复选项目是否包含目录,默认`true`,如果只获取叶子节点设置为`false`
-    idsWithParent: true
+    // Boolean,v-model数据是否包含目录,默认`false`,如果只获取叶子节点设置为`false`
+    idsWithParent: false
     
     // Number,初始化时展开层级,根节点为0,默认0
     depthOpen: 0
     
-    // (v2.2新增), 选择框选中样式
+    // (v2.2新增), 选择框label选中样式
     checkedClass: 'fa fa-check-square-o fa-fw'
     
-    // (v2.2新增), 选择框半选中样式
+    // (v2.2新增), 选择框label半选中样式
     halfCheckedClass: 'fa fa-minus-square-o fa-fw'
     
-    // (v2.2新增), 选择框未选中样式
+    // (v2.2新增), 选择框label未选中样式
     CheckedClass: 'fa fa-square-o fa-fw'
 }
 ```
-> 注意：默认设置使用了`font-awesome`的图标，
-如果你继续使用默认设置，请引入这个`css`库
+> 注意：默认设置使用了 [font-awesome](http://fontawesome.io/) 图标，
+如果你继续使用默认设置，请确保这些图标能正常使用。
   
-## 如何获取复选数据?
+## 如何获取选择框数据?
 
-自v2.1起,不再从options.checkedIds获取复选数据,
-而是使用`v-model="checkedIds"`获取复选id.
-
-> 默认情况下获取的ids是包含所有上级目录的,如果你想获取只包含叶子节点的ids,设置`options.idsWithParent`为`false`
+使用 `v-model="ids"` 获取选择框数据（ `ids` 是一个只包含 `id` 的数组）
+  
+默认情况下 `ids` 只包含叶子节点（所有目录被过滤掉），如果你想获取包含上级目录的 `ids`，设置 `options.idsWithParent` 为 `true`
 
 ## 事件
 
