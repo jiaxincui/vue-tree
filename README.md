@@ -221,7 +221,7 @@ options: {
     halfCheckedClass: 'fa fa-minus-square-o fa-fw'
     
     // (v2.2新增), 选择框label未选中样式
-    CheckedClass: 'fa fa-square-o fa-fw'
+    unCheckedClass: 'fa fa-square-o fa-fw'
 }
 ```
 > 注意：默认设置使用了 [font-awesome](http://fontawesome.io/) 图标，
