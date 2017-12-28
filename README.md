@@ -258,7 +258,7 @@ options: {
 
 为绑定的事件定义监听方法，~~这些方法都接收一个当前操作id作为参数~~,（v2.2.3）当前操作 `id` 作为监听方法的第一个参数，当前 `model`作为第二个参数
 
-```
+```a
 methods: {
   addAChild (id, item) {
     this.message.push(`触发添加子节点事件，当前节点${JSON.stringify(item)}`)
