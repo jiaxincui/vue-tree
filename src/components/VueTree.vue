@@ -1,5 +1,5 @@
 <template>
-  <ul class="vue-tree">
+  <ul class="vue-tree-list">
     <tree-item
       v-for="(item, idx) in treeData"
       :ids="ids"
@@ -50,29 +50,17 @@
     data () {
       return {
         defaultOptions: {
-          itemName: 'name',
+          label: 'label',
           checkbox: true,
           checkedOpen: true,
           folderBold: true,
           idsWithParent: true,
           depthOpen: 0,
-          showAdd: true,
-          showEdit: true,
-          showDelete: true,
-          addClass: 'fa fa-plus-square-o',
-          editClass: 'fa fa-edit',
-          deleteClass: 'fa fa-trash-o',
-          openClass: 'fa fa-angle-right',
-          closeClass: 'fa fa-angle-down',
-          halfCheckedClass: 'fa fa-minus-square-o fa-fw',
-          checkedClass: 'fa fa-check-square-o fa-fw',
-          unCheckedClass: 'fa fa-square-o fa-fw',
-          openIcon: '',
-          closeIcon: '',
-          halfCheckedIcon: '',
-          checkedIcon: '',
-          unCheckedIcon: '',
-          handleIcon: ''
+          openIcon: 'fa fa-angle-right',
+          closeIcon: 'fa fa-angle-down',
+          halfCheckedIcon: 'fa fa-minus-square-o fa-fw',
+          checkedIcon: 'fa fa-check-square-o fa-fw',
+          uncheckedIcon: 'fa fa-square-o fa-fw'
         },
         termOptions: {},
         idsWithParent: [],
@@ -92,12 +80,6 @@
         },
         deep: true
       }
-      // ids: {
-      //   handler: function (val) {
-      //     this.idsWithParent = val.slice(0)
-      //   },
-      //   deep: true
-      // }
     },
 
     methods: {
