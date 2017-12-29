@@ -116,15 +116,11 @@
           } else {
             if (this.isFolder) {
               this.delChecked()
-              this.delId()
             }
           }
         }
         if (this.state > 0) {
           this.addChecked()
-          if (!this.isFolder || this.options.idsWithParent) {
-            this.addId()
-          }
           this.itemState = this.itemState + 1
         }
       }
@@ -180,13 +176,9 @@
       state (val, old) {
         if (val > old) {
           this.addChecked()
-          if (!this.isFolder || this.options.idsWithParent) {
-            this.addId()
-          }
           this.itemState = this.itemState + 1
         } else {
           this.delChecked()
-          this.delId()
           this.deleteHalfChecked(this.model.id)
           this.itemState = this.itemState - 1
         }
@@ -214,14 +206,10 @@
         }
         if (this.checked) {
           this.delChecked()
-          this.delId()
           this.$emit('child-change', false)
           this.itemState = this.itemState - 1
         } else {
           this.addChecked()
-          if (!this.isFolder || this.options.idsWithParent) {
-            this.addId()
-          }
           this.$emit('child-change', true)
           if (this.options.checkedOpen && this.isFolder) {
             this.open = true
@@ -230,29 +218,25 @@
         }
       },
 
-      addId () {
-        if (this.ids.indexOf(this.model.id) === -1) {
-          this.$set(this.ids, this.ids.length, this.model.id)
-        }
-      },
-
-      delId () {
-        let index = this.ids.indexOf(this.model.id)
-        if (index > -1) {
-          this.$delete(this.ids, index)
-        }
-      },
-
       addChecked () {
         if (this.idsWithParent.indexOf(this.model.id) === -1) {
           this.$set(this.idsWithParent, this.idsWithParent.length, this.model.id)
+        }
+        if (!this.isFolder || this.options.idsWithParent) {
+          if (this.ids.indexOf(this.model.id) === -1) {
+            this.$set(this.ids, this.ids.length, this.model.id)
+          }
         }
       },
 
       delChecked () {
         let idx = this.idsWithParent.indexOf(this.model.id)
+        let index = this.ids.indexOf(this.model.id)
         if (idx !== -1) {
           this.$delete(this.idsWithParent, idx)
+        }
+        if (index !== -1) {
+          this.$delete(this.ids, index)
         }
       },
 
@@ -270,51 +254,26 @@
       },
 
       childChange (checked) {
-        let children
-        children = this.model.children
-        for (let i = 0, l = children.length; i < l; i++) {
-          if (this.half.indexOf(children[i].id) !== -1) {
-            this.addChecked()
-            if (this.options.idsWithParent) {
-              this.addId()
-            }
-            this.setHalfChecked()
-            this.$emit('child-change', true)
-            return
-          }
+        if (this.model.children.some((val) => this.half.indexOf(val.id) !== -1)) {
+          this.addChecked()
+          this.setHalfChecked()
+          this.$emit('child-change', true)
+          return
         }
         if (checked) {
           this.addChecked()
-          if (this.options.idsWithParent) {
-            this.addId()
-          }
-          let allChecked = true
-          for (let i = 0, l = children.length; i < l; i++) {
-            if (this.idsWithParent.indexOf(children[i].id) === -1) {
-              allChecked = false
-              break
-            }
-          }
-          if (allChecked) {
-            this.deleteHalfChecked()
-          } else {
+          if (this.model.children.some((val) => this.idsWithParent.indexOf(val.id) === -1)) {
             this.setHalfChecked()
+          } else {
+            this.deleteHalfChecked()
           }
           this.$emit('child-change', true)
         } else {
-          let nonChecked = true
-          for (let i = 0, l = children.length; i < l; i++) {
-            if (this.idsWithParent.indexOf(children[i].id) !== -1) {
-              nonChecked = false
-              break
-            }
-          }
-          if (nonChecked) {
+          if (this.model.children.some((val) => this.idsWithParent.indexOf(val.id) !== -1)) {
+            this.setHalfChecked()
+          } else {
             this.deleteHalfChecked()
             this.delChecked()
-            this.delId()
-          } else {
-            this.setHalfChecked()
           }
           this.$emit('child-change', false)
         }
