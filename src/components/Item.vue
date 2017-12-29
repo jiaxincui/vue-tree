@@ -15,7 +15,6 @@
         class="item-toggle"
       />
       <span class="item-checkbox" v-if="options.checkbox">
-        <input type="checkbox" :checked="ids.indexOf(model.id) >= 0" v-show="false">
         <label class="item-label" @click="toggleChecked">
           <span :class="[labelIcon, labelStatus]"></span>
         </label>
@@ -23,31 +22,11 @@
       <span
         class="item-name"
         :class="isBold"
-        @click="itemClick"
+        @click="handle"
       >
         {{ model[options.itemName] }}
       </span>
       <span class="item-btn">
-        <i
-          v-if="options.showAdd"
-          class="add-btn"
-          :class="[options.addClass]"
-          @click="addChild"
-        />
-        &nbsp;
-        <i
-          v-if="options.showEdit"
-          class="edit-btn"
-          :class="[options.editClass]"
-          @click="itemEdit"
-        />
-        &nbsp;
-        <i
-          v-if="options.showDelete"
-          class="delete-btn"
-          :class="[options.deleteClass]"
-          @click="itemDelete"
-        />
       </span>
     </div>
     <ul v-if="isFolder" v-show="open" class="vue-tree-list">
@@ -59,12 +38,10 @@
         :depth="depth + 1"
         :ids-with-parent="idsWithParent"
         :half="half"
+        :state="itemState"
         :key="idx"
+        @handle="emitHandle"
         @child-change="childChange"
-        @add-a-child="emitAddChild"
-        @item-click="emitItemClick"
-        @item-edit="emitItemEdit"
-        @item-delete="emitItemDelete"
       />
     </ul>
   </li>
@@ -112,21 +89,44 @@
         default: function () {
           return []
         }
+      },
+
+      state: {
+        type: Number,
+        default: 0
       }
     },
 
     data () {
       return {
-        open: false
+        open: false,
+        itemState: 0
       }
     },
 
     created () {
-      if (this.options.checkbox) {
-        this.idsChange(this.idsWithParent)
-      }
       if (this.isFolder && this.depth < this.options.depthOpen) {
         this.open = true
+      }
+      if (this.options.checkbox) {
+        if (this.idsWithParent.indexOf(this.model.id) !== -1) {
+          this.itemState = this.itemState + 1
+          if (this.options.idsWithParent) {
+            this.$emit('child-change', true)
+          } else {
+            if (this.isFolder) {
+              this.delChecked()
+              this.delId()
+            }
+          }
+        }
+        if (this.state > 0) {
+          this.addChecked()
+          if (!this.isFolder || this.options.idsWithParent) {
+            this.addId()
+          }
+          this.itemState = this.itemState + 1
+        }
       }
     },
 
@@ -177,7 +177,20 @@
     },
 
     watch: {
-      idsWithParent: 'idsChange'
+      state (val, old) {
+        if (val > old) {
+          this.addChecked()
+          if (!this.isFolder || this.options.idsWithParent) {
+            this.addId()
+          }
+          this.itemState = this.itemState + 1
+        } else {
+          this.delChecked()
+          this.delId()
+          this.deleteHalfChecked(this.model.id)
+          this.itemState = this.itemState - 1
+        }
+      }
     },
 
     methods: {
@@ -187,90 +200,70 @@
         }
       },
 
-      itemClick () {
-        this.emitItemClick(this.model.id, this.self)
+      handle () {
+        this.emitHandle(this.self)
       },
 
-      addChild () {
-        this.emitAddChild(this.model.id, this.self)
-      },
-
-      itemEdit () {
-        this.emitItemEdit(this.model.id, this.self)
-      },
-
-      itemDelete () {
-        this.emitItemDelete(this.model.id, this.self)
-      },
-
-      emitItemClick (id, item) {
-        this.$emit('item-click', id, item)
-      },
-
-      emitItemEdit (id, item) {
-        this.$emit('item-edit', id, item)
-      },
-
-      emitItemDelete (id, item) {
-        this.$emit('item-delete', id, item)
-      },
-
-      emitAddChild (id, item) {
-        this.$emit('add-a-child', id, item)
+      emitHandle (item) {
+        this.$emit('handle', item)
       },
 
       toggleChecked () {
         if (this.isFolder) {
-          this.deleteHalfChecked(this.model.id)
+          this.deleteHalfChecked()
         }
         if (this.checked) {
-          this.delChecked(this.model.id)
-          this.delId(this.model.id)
-          this.allChildDelete(this.model)
+          this.delChecked()
+          this.delId()
           this.$emit('child-change', false)
+          this.itemState = this.itemState - 1
         } else {
-          this.addChecked(this.model.id)
+          this.addChecked()
           if (!this.isFolder || this.options.idsWithParent) {
-            this.addId(this.model.id)
+            this.addId()
           }
-          this.allChildAdd(this.model)
           this.$emit('child-change', true)
           if (this.options.checkedOpen && this.isFolder) {
             this.open = true
           }
+          this.itemState = this.itemState + 1
         }
       },
 
-      addId (id) {
-        if (this.ids.indexOf(id) === -1) {
-          this.$set(this.ids, this.ids.length, id)
+      addId () {
+        if (this.ids.indexOf(this.model.id) === -1) {
+          this.$set(this.ids, this.ids.length, this.model.id)
         }
       },
 
-      delId (id) {
-        let index = this.ids.indexOf(id)
-        if (index > -1) this.$delete(this.ids, index)
-      },
-
-      addChecked (id) {
-        if (this.idsWithParent.indexOf(id) === -1) {
-          this.$set(this.idsWithParent, this.idsWithParent.length, id)
+      delId () {
+        let index = this.ids.indexOf(this.model.id)
+        if (index > -1) {
+          this.$delete(this.ids, index)
         }
       },
 
-      delChecked (id) {
-        let idx = this.idsWithParent.indexOf(id)
-        if (idx !== -1) this.$delete(this.idsWithParent, idx)
-      },
-
-      setHalfChecked (id) {
-        if (this.half.indexOf(id) === -1) {
-          this.$set(this.half, this.half.length, id)
+      addChecked () {
+        if (this.idsWithParent.indexOf(this.model.id) === -1) {
+          this.$set(this.idsWithParent, this.idsWithParent.length, this.model.id)
         }
       },
 
-      deleteHalfChecked (id) {
-        let idx = this.half.indexOf(id)
+      delChecked () {
+        let idx = this.idsWithParent.indexOf(this.model.id)
+        if (idx !== -1) {
+          this.$delete(this.idsWithParent, idx)
+        }
+      },
+
+      setHalfChecked () {
+        if (this.half.indexOf(this.model.id) === -1) {
+          this.$set(this.half, this.half.length, this.model.id)
+        }
+      },
+
+      deleteHalfChecked () {
+        let idx = this.half.indexOf(this.model.id)
         if (idx !== -1) {
           this.$delete(this.half, idx)
         }
@@ -281,18 +274,19 @@
         children = this.model.children
         for (let i = 0, l = children.length; i < l; i++) {
           if (this.half.indexOf(children[i].id) !== -1) {
-            this.addChecked(this.model.id)
+            this.addChecked()
             if (this.options.idsWithParent) {
-              this.addId(this.model.id)
+              this.addId()
             }
-            this.setHalfChecked(this.model.id)
+            this.setHalfChecked()
+            this.$emit('child-change', true)
             return
           }
         }
         if (checked) {
-          this.addChecked(this.model.id)
+          this.addChecked()
           if (this.options.idsWithParent) {
-            this.addId(this.model.id)
+            this.addId()
           }
           let allChecked = true
           for (let i = 0, l = children.length; i < l; i++) {
@@ -302,9 +296,9 @@
             }
           }
           if (allChecked) {
-            this.deleteHalfChecked(this.model.id)
+            this.deleteHalfChecked()
           } else {
-            this.setHalfChecked(this.model.id)
+            this.setHalfChecked()
           }
           this.$emit('child-change', true)
         } else {
@@ -316,57 +310,13 @@
             }
           }
           if (nonChecked) {
-            this.deleteHalfChecked(this.model.id)
-            this.delChecked(this.model.id)
-            this.delId(this.model.id)
+            this.deleteHalfChecked()
+            this.delChecked()
+            this.delId()
           } else {
-            this.setHalfChecked(this.model.id)
+            this.setHalfChecked()
           }
           this.$emit('child-change', false)
-        }
-      },
-
-      allChildAdd (item) {
-        if (item.children && item.children.length) {
-          for (let i = 0, l = item.children.length; i < l; i++) {
-            this.addChecked(item.children[i].id)
-            if (!(item.children[i].children && item.children[i].children.length) || this.options.idsWithParent) {
-              this.addId(item.children[i].id)
-            }
-            this.allChildAdd(item.children[i])
-          }
-        }
-      },
-
-      allChildDelete (item) {
-        if (item.children && item.children.length) {
-          let childIds = this.allChildIds(item, new Array(0))
-          for (let i = 0, l = childIds.length; i < l; i++) {
-            this.delChecked(childIds[i])
-            this.delId(childIds[i])
-          }
-        }
-      },
-
-      allChildIds (item, res) {
-        if (item.children && item.children.length) {
-          for (let i = 0, l = item.children.length; i < l; i++) {
-            res.push(item.children[i].id)
-            this.allChildIds(item.children[i], res)
-          }
-        }
-        return res
-      },
-
-      idsChange (val) {
-        if (this.isFolder && this.depth < this.options.depthOpen) {
-          this.open = true
-        }
-        if (val.indexOf(this.model.id) !== -1) {
-          if (this.isFolder && !this.options.idsWithParent) {
-            this.delId(val.id)
-          }
-          this.$emit('child-change', true)
         }
       }
     }

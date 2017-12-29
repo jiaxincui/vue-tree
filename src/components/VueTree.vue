@@ -7,11 +7,9 @@
       :model="item"
       :options="termOptions"
       :depth="0"
+      :state="state"
       :key="idx"
-      @add-a-child="addAChild"
-      @item-click="itemClick"
-      @item-edit="itemEdit"
-      @item-delete="itemDelete"
+      @handle="handle"
     />
   </ul>
 </template>
@@ -68,15 +66,23 @@
           closeClass: 'fa fa-angle-down',
           halfCheckedClass: 'fa fa-minus-square-o fa-fw',
           checkedClass: 'fa fa-check-square-o fa-fw',
-          unCheckedClass: 'fa fa-square-o fa-fw'
+          unCheckedClass: 'fa fa-square-o fa-fw',
+          openIcon: '',
+          closeIcon: '',
+          halfCheckedIcon: '',
+          checkedIcon: '',
+          unCheckedIcon: '',
+          handleIcon: ''
         },
         termOptions: {},
-        idsWithParent: []
+        idsWithParent: [],
+        state: 0
       }
     },
 
     created () {
       this.initOptions()
+      this.idsWithParent = this.ids.slice(0)
     },
 
     watch: {
@@ -85,27 +91,18 @@
           this.initOptions()
         },
         deep: true
-      },
-      ids: {
-        handler: function (val) {
-          this.idsWithParent = val.slice(0)
-        },
-        deep: true
       }
+      // ids: {
+      //   handler: function (val) {
+      //     this.idsWithParent = val.slice(0)
+      //   },
+      //   deep: true
+      // }
     },
 
     methods: {
-      addAChild (id, item) {
-        this.$emit('add-a-child', id, item)
-      },
-      itemClick (id, item) {
-        this.$emit('item-click', id, item)
-      },
-      itemEdit (id, item) {
-        this.$emit('item-edit', id, item)
-      },
-      itemDelete (id, item) {
-        this.$emit('item-delete', id, item)
+      handle (item) {
+        this.$emit('handle', item)
       },
       initOptions () {
         this.termOptions = Object.assign({}, this.defaultOptions, this.options)

@@ -78,7 +78,7 @@
     name: 'app',
     data: function () {
       return {
-        ids: [62],
+        ids: [4],
 
         options: {
           itemName: 'name',
@@ -93,7 +93,7 @@
           deleteClass: 'fa fa-trash-o',
           openClass: 'fa fa-angle-right',
           closeClass: 'fa fa-angle-down',
-          idsWithParent: false,
+          idsWithParent: true,
           depthOpen: 0,
           halfCheckedClass: 'fa fa-minus-square-o fa-fw text-primary',
           checkedClass: 'fa fa-check-square-o fa-fw text-danger',
