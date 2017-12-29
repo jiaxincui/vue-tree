@@ -40,11 +40,11 @@
           </div>
           <div class="form-group">
               <label>初始展开层级</label>
-              <input type="number" class="form-control" v-model="options.depthOpen">
+              <input type="number" class="form-control" v-model="options.depthOpen" disabled>
           </div>
           <h3>Events</h3>
-          <p>点击增删改按钮试一下</p>
-          <p v-for="item in message"><mark>{{item}}</mark></p>
+          <p>单击节点名称触发<code>handle</code>事件</p>
+          <p v-for="item in message"><pre v-html="item"></pre></p>
           <h3>Checked ids</h3>
           <p>{{ids}}</p>
           <h3>Options</h3>
@@ -67,7 +67,7 @@
           checkedOpen: true,
           folderBold: true,
           idsWithParent: true,
-          depthOpen: 0,
+          depthOpen: 2,
           openIcon: 'fa fa-angle-right',
           closeIcon: 'fa fa-angle-down',
           halfCheckedIcon: 'fa fa-minus-square-o fa-fw text-primary',
@@ -173,7 +173,7 @@
 
     methods: {
       handle (item) {
-        this.message.push(`节点 ${JSON.stringify(item)}，'handle' 事件`)
+        this.message.push(`节点 ${JSON.stringify(item)} 作为事件参数传递`)
       }
     }
   }
