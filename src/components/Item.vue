@@ -166,7 +166,7 @@
     },
 
     watch: {
-      state (val, old) {
+      state(val, old) {
         if (val > old) {
           this.addChecked()
           this.itemState = this.itemState + 1
@@ -177,7 +177,6 @@
         }
       }
     },
-
     methods: {
       toggle () {
         if (this.isFolder) {

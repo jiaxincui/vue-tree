@@ -44,7 +44,9 @@
           </div>
           <h3>Events</h3>
           <p>单击节点名称触发<code>handle</code>事件</p>
-          <p v-for="item in message"><pre v-html="item"></pre></p>
+          <p v-for="item in message">
+            <code v-html="item"></code>
+          </p>
           <h3>Checked ids</h3>
           <p>{{ids}}</p>
           <h3>Options</h3>
@@ -170,10 +172,9 @@
         }]
       }
     },
-
     methods: {
       handle (item) {
-        this.message.push(`节点 ${JSON.stringify(item)} 作为事件参数传递`)
+        this.message.push(`节点 ${JSON.stringify(item)}`)
       }
     }
   }
