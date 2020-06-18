@@ -1,5 +1,15 @@
 # vue-simple-tree
 
+
+## 此项目不再维护！
+
+## 此项目不再维护！
+
+## 此项目不再维护！
+
+
+
+
 > A simple tree component for vue.js
 
 **v2.3.0重写核心计算方法，大幅减小代码体积，此版本有较多变动，见 [CHANGELOG](https://github.com/jiaxincui/vue-tree/blob/master/CHANGELOG.md)**
